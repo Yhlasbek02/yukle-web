@@ -1,0 +1,21 @@
+user/auth
+1. profile get done
+2. sign-up/email/ post done
+3. sign-up/mobile post done
+4. verify post done
+5. login/email post done
+6. login/mobile post done
+7. /resend-code/email post done
+8. verify-otp post done
+9. change-pass post done
+10. change-account post done
+11. delete-account delete done
+
+user
+12. countries get
+13. cities/:countryId get
+
+transport
+14. get-types/ get
+15. /add/ post
+16. / get 

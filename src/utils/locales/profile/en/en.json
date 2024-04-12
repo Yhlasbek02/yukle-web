@@ -1,0 +1,15 @@
+{
+    "title": "Profile",
+    "logout": "Log out",
+    "delete": "Delete account",
+    "name": "name",
+    "mobile_number":"Mobile number",
+    "email":"Email",
+    "language":"Language",
+    "notifications":"Notifications",
+    "transport": "Transport",
+    "cargo":"Cargo",
+    "support_title":"Support centre",
+    "placeholder":"Your message",
+    "button": "Send"
+}
