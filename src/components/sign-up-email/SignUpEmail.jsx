@@ -1,71 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { AuthStyle } from '../../styles/authSidebar';
-import { Link } from 'react-router-dom';
+import { AuthStyle, Left, Right } from '../../styles/authSidebar';
+
 import AuthSidebar from '../authSidebar/authSidebar';
 import { Card, Container, Mobile, RegisterLink } from '../../styles/authCard';
+import LanguageSelectForAuth from '../../utils/languageForAuth';
+import Form from '../signUpForm/Form';
+
+const getLanguageFromPath = () => {
+  const pathname = window.location.pathname;
+  const parts = pathname.split('/');
+  const lastPart = parts[parts.length - 1];
+  if (['en', 'ru', 'tr'].includes(lastPart)) {
+    return lastPart;
+  } else {
+    return 'en';
+  }
+};
 
 function SignUpForm() {
+  const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
   const { signUpEmail } = useGlobalContext();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [language, setLang] = useState('en');
-  const [error, setError] = useState('');
   const history = useNavigate();
-
+  useEffect(() => {
+    setSelectedLanguage(getLanguageFromPath());
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signUpEmail(name, surname, email, password, language);
-      localStorage.setItem('email', email);
-      setEmail('');
-      setName('');
-      setSurname('');
-      setPassword('');
-      console.log('Sign up successful');
-      history(`/verify/${language}`);
+      const isSuccess = await signUpEmail(name, surname, email, password, selectedLanguage);
+      if (isSuccess) {
+        localStorage.setItem('email', email);
+        setEmail('');
+        setName('');
+        setSurname('');
+        setPassword('');
+        console.log('Sign up successful');
+        history(`/verify/${selectedLanguage}`);
+      }
     } catch (error) {
-      alert(error);
+      console.log(error);
       setError(error.response?.data?.message || 'Sign up failed');
     }
   };
 
   return (
     <AuthStyle>
-      <div className='right'>
+      <Right>
         <AuthSidebar />
-      </div>
-      <div className='left'>
+      </Right>
+      <Left>
+
         <Card>
+          <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
           <Container>
-            <form onSubmit={handleSubmit}>
-              <h1>Sign up</h1>
-              <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-              <input type="text" placeholder="Surname" value={surname} onChange={(e) => setSurname(e.target.value)} />
-              <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <br />  
-              <span className='sign-mobile'>Sign up with&nbsp;<RegisterLink><Link to={`/signup-mobile/${language}`}>mobile number</Link></RegisterLink></span><br />  
-              <button type="submit">Sign Up</button><br />
-              <RegisterLink>
-                <Link to={`/login-email/${language}`}>Log in</Link>
-              </RegisterLink>
-              <br />
-              <div className='privacy'>
-                <span>Privacy policies and etc.</span>
-              </div>
-              
-            </form>
-            {error && <p>{error}</p>}
+            <Form
+              submit={handleSubmit}
+              name={name}
+              setName={setName}
+              surname={surname}
+              setSurname={setSurname}
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              language={selectedLanguage}
+            />
+
           </Container>
-
         </Card>
-      </div>
-
-
+      </Left>
     </AuthStyle>
   );
 }

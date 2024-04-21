@@ -1,13 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.b3f95d32.css",
-    "main.js": "/static/js/main.ec803d60.js",
+    "main.js": "/static/js/main.b963ba50.js",
+    "static/media/sidebarBack.svg": "/static/media/sidebarBack.b84286a8bd0fad0a1451805ea5f7e000.svg",
+    "static/media/Rectangle.svg": "/static/media/Rectangle.c2f29b86d416ddf96b8d391be7e86f9d.svg",
+    "static/media/Trans.svg": "/static/media/Trans.b429a655a902ee6bedd8ed51daa29ff5.svg",
+    "static/media/Home_not.svg": "/static/media/Home_not.e054c7cda4430999b0a3ba8847512c99.svg",
+    "static/media/transActive.svg": "/static/media/transActive.d6885e704d55e07004480725e8e5f2a8.svg",
+    "static/media/cargo.svg": "/static/media/cargo.913341b99ea961700d3ae2581f8be201.svg",
+    "static/media/cargoActive.svg": "/static/media/cargoActive.818dfade22a464246d4429370d1f2b0d.svg",
+    "static/media/Cargo_active.svg": "/static/media/Cargo_active.1f6110ec693ee4515e56017943cca581.svg",
+    "static/media/transport.svg": "/static/media/transport.d1c2d82e2019b14abbf443a92a0e2e8d.svg",
+    "static/media/Home_icon.svg": "/static/media/Home_icon.9329f72ccc97b8f628efad56106bdfc3.svg",
+    "static/media/globus_1.svg": "/static/media/globus_1.64f621b9296e86cbc0a03bd131092b4c.svg",
+    "static/media/user.svg": "/static/media/user.75a744d70d3a74f4010ea28bd3e177b4.svg",
     "index.html": "/index.html",
-    "main.b3f95d32.css.map": "/static/css/main.b3f95d32.css.map",
-    "main.ec803d60.js.map": "/static/js/main.ec803d60.js.map"
+    "static/media/User_active.svg": "/static/media/User_active.4ae342f93a20dc33496579dadd091c77.svg",
+    "main.b963ba50.js.map": "/static/js/main.b963ba50.js.map"
   },
   "entrypoints": [
-    "static/css/main.b3f95d32.css",
-    "static/js/main.ec803d60.js"
+    "static/js/main.b963ba50.js"
   ]
 }

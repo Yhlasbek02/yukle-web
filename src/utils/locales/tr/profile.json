@@ -1,0 +1,15 @@
+{
+    "title": "Profil",
+    "logout": "Çıkış",
+    "delete": "Hesabı sil",
+    "name": "Ad",
+    "mobile_number":"Cep telefonu numarası",
+    "email":"E-posta",
+    "language":"Dil",
+    "notifications":"Bildirimler",
+    "transport": "Transport",
+    "cargo":"Kargo",
+    "support_title":"Destek merkezi",
+    "placeholder":"Mesajınız",
+    "button": "Gönder"
+}

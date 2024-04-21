@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react'
 import { IoIosAdd } from "react-icons/io"
 import { AddButtonContainer, Button } from '../style'
 import AddTransportModal from '../../modals/addTransportModal.jsx/addTransport';
-export default function AddTransport() {
+export default function AddTransport({language}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -19,7 +19,7 @@ export default function AddTransport() {
                     <IoIosAdd size={40} color='white' />
                 </Button>
             </AddButtonContainer>
-            {isModalOpen && <AddTransportModal onClose={closeModal} />}
+            {isModalOpen && <AddTransportModal onClose={closeModal} language={language} />}
         </>
 
     )

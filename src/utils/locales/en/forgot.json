@@ -1,0 +1,10 @@
+{
+    "Title":"Input your phone number, then we will send you a verification code",
+    "title":"Input your Email, then we will send you a verification code",
+    "email":"Email",
+    "mobile":"Mobile",
+    "paragraph":"Use",
+    "option_mobile":"mobile",
+    "option_email":"email",
+    "button":"Next"
+}

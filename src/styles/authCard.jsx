@@ -6,11 +6,12 @@ export const Card = styled.div`
     background-color: #ffffff;
     padding: 10px;
     border-radius: 30px;
+    height: 100vh;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     form {
         margin-top: 10%;
         width: 500px;
-        height: 100vh;
+
     }
 
     h1 {
@@ -43,7 +44,7 @@ export const Card = styled.div`
     }
 
     button {
-        width: 37%;
+        width: 45%;
         padding: 10px;
         margin-top: 25px;
         margin-bottom: 25px;
@@ -172,11 +173,12 @@ export const Input = styled.input`
 
 export const EyeIcon = styled.div`
   position: absolute;
-  top: 50%;
+  top: 45%;
   transform: translateY(-50%);
-  right: 10px;
+  right: 20%;
   padding: 5px;
   cursor: pointer;
+  color: #4D9FFF;
 `;
 
 export const TryAgainMessage = styled(Link)`
@@ -190,6 +192,6 @@ export const TryAgainMessage = styled(Link)`
 
 export const InputContainer = styled.div`
   position: relative;
-  width: 90%;
+  width: 100%;
   margin: 10px 0;
 `;

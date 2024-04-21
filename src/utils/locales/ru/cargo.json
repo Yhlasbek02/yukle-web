@@ -1,0 +1,9 @@
+{
+    "title":"Мой груз",
+    "date": "День",
+    "weight":"Вес",
+    "modalTitle": "Груз",
+    "modalName":"Имя",
+    "modalNumber":"Номер мобильного телефона",
+    "modalEmail":"Электронная почта"
+}

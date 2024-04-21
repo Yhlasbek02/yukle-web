@@ -1,0 +1,16 @@
+{
+    "title":"Add new cargo",
+    "type":"Select type",
+    "from_country":"From (country)",
+    "from_city":"From (city)",
+    "to_country":"To (country)",
+    "to_city":"To (city)",
+    "weight":"Weight",
+    "type_transport":"Type of transport (optional)",
+    "name":"Name",
+    "number":"Mobile number",
+    "email":"Email",
+    "whatsApp":"WhatsApp",
+    "additional": "Additional information (optional)",
+    "add": "Add cargo"
+}

@@ -46,30 +46,20 @@ const Icon = styled.span`
   cursor: pointer;
 `;
 
-
-const LanguageSelect = () => {
+const LanguageSelect = ({ selectedLanguage, setSelectedLanguage }) => {
     const history = useNavigate();
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
 
-    // Extract the default language from the URL pathname
-    const defaultLanguage = location.pathname.split('/').pop();
-
     const handleLanguageChange = (newLanguage) => {
+        setSelectedLanguage(newLanguage);
         const currentPathname = location.pathname;
-        const currentSearch = location.search;
-
-        const parts = currentPathname.split('/');
-
-        const updatedPathname = parts.map((part, index) => {
-            if (['en', 'ru', 'tr'].includes(part)) {
-                return newLanguage;
-            }
-            return part;
-        }).join('/');
-
-        history(`${updatedPathname}${currentSearch}`);
+        const lastSlashIndex = currentPathname.lastIndexOf("/");
+        const newPath = currentPathname.substring(0, lastSlashIndex + 1) + newLanguage; // Construct the new path
+        history(newPath); // Update the URL
+        setIsOpen(false);
     };
+    
 
     const handleToggleOptions = () => {
         setIsOpen(prevState => !prevState);
@@ -81,7 +71,7 @@ const LanguageSelect = () => {
 
     return (
         <SelectContainer>
-            <SelectedLanguage>{capitalizeFirstLetter(defaultLanguage)}</SelectedLanguage>
+            <SelectedLanguage>{capitalizeFirstLetter(selectedLanguage)}</SelectedLanguage>
             <Options isOpen={isOpen}>
                 <OptionItem onClick={() => handleLanguageChange("en")}>En</OptionItem>
                 <OptionItem onClick={() => handleLanguageChange("ru")}>Ru</OptionItem>

@@ -1,0 +1,9 @@
+{
+    "title":"My Cargo",
+    "date": "Date",
+    "weight":"Weight",
+    "modalTitle": "Cargo",
+    "modalName":"Name",
+    "modalNumber":"Mobile number",
+    "modalEmail":"Email"
+}

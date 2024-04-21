@@ -4,21 +4,56 @@ import { useNavigate } from 'react-router-dom';
 import { AuthStyle } from '../../styles/authSidebar';
 import { Link } from 'react-router-dom';
 import AuthSidebar from '../authSidebar/authSidebar';
-import { Card, Container, InputField, RegisterLink, Timer, Paragraph, CodeContainer, TryAgainMessage } from '../../styles/authCard';
+import LanguageSelectForAuth from '../../utils/languageForAuth';
+import { Card, Container, InputField, Timer, Paragraph, CodeContainer, TryAgainMessage } from '../../styles/authCard';
+import enData from "../../utils/locales/en/verify.json";
+import ruData from "../../utils/locales/ru/verify.json";
+import trData from "../../utils/locales/tr/verify.json";
+
+const getLanguageFromPath = () => {
+  const pathname = window.location.pathname;
+  const parts = pathname.split('/');
+  const lastPart = parts[parts.length - 1];
+  if (['en', 'ru', 'tr'].includes(lastPart)) {
+    return lastPart;
+  } else {
+    return 'en';
+  }
+};
 
 function Verification() {
+  const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
   const { signUpEmail } = useGlobalContext();
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [language, setLang] = useState('en');
   const [showTryAgain, setShowTryAgain] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(10); // 5 minutes in seconds
+  const [remainingTime, setRemainingTime] = useState(120); // 5 minutes in seconds
   const [inputsDisabled, setInputsDisabled] = useState(false);
   const [otp, setOTP] = useState(['', '', '', '']);
-  const [error, setError] = useState('');
+  useEffect(() => {
+    setSelectedLanguage(getLanguageFromPath());
+  }, []);
+  const [translation, setTranslations] = useState(enData);
+  const loadTranslations = () => {
+    switch (selectedLanguage) {
+      case 'en':
+        setTranslations(enData);
+        break;
+      case 'ru':
+        setTranslations(ruData);
+        break;
+      case 'tr':
+        setTranslations(trData);
+        break;
+      default:
+        setTranslations(enData);
+    }
+  };
+
+  useEffect(() => {
+    loadTranslations();
+  }, [selectedLanguage]);
   const history = useNavigate();
+
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   useEffect(() => {
     let timer;
@@ -83,11 +118,16 @@ function Verification() {
       </div>
       <div className='left'>
         <Card>
+          <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
           <Container>
             <form onSubmit={handleSubmit}>
-              <h1 style={{fontWeight: 800}}>Verification</h1>
+              <h1 style={{ fontWeight: 800 }}>
+                {translation.title}
+              </h1>
               <Timer>{`${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}</Timer>
-              <Paragraph>Type the verification code <br></br> we've sent you</Paragraph>
+              <Paragraph>
+                {translation.paragraph}
+              </Paragraph>
               <CodeContainer>
                 {otp.map((digit, index) => (
                   <InputField
@@ -105,23 +145,18 @@ function Verification() {
               <div style={{ marginTop: "60px" }}>
                 {showTryAgain && (
                   <TryAgainMessage to={`/forgot-email/${language}`}>
-                    Try again
+                    {translation.try_again}
                   </TryAgainMessage>
                 )}
                 <br />
-                <button type="submit" style={{ marginTop: "1.5rem" }} disabled={showTryAgain || inputsDisabled}>Next</button><br />
-
+                <button type="submit" style={{ marginTop: "1.5rem" }} disabled={showTryAgain || inputsDisabled}>
+                  {translation.button}
+                </button><br />
               </div>
-
-
             </form>
-            {error && <p>{error}</p>}
           </Container>
-
         </Card>
       </div>
-
-
     </AuthStyle>
   );
 }

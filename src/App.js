@@ -10,7 +10,6 @@ import LoginEmail from "./components/login-email/LoginEmail";
 import LoginMobile from "./components/login-mobile/LoginMobile";
 import Verification from "./components/verification/Verification";
 import Cargos from "./components/cargos/Cargos";
-import Transports from "./components/transports/Transports";
 import MyCargo from "./components/my-cargo/MyCargo";
 import MyTransport from "./components/my-transport/MyTransport";
 import Profile from "./components/profile/Profile";
@@ -19,6 +18,10 @@ import Notifications from "./components/notifications/Notifications";
 
 
 const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <SignUpEmail />
+    },
     {
         path: '/:lang',
         element: <SignUpEmail />
@@ -52,12 +55,8 @@ const router = createBrowserRouter([
         element: <NewPassword />
     },
     {
-        path: '/cargos/:lang',
+        path: '/main/:lang',
         element: <Cargos />
-    },
-    {
-        path: '/transport/:lang',
-        element: <Transports />
     },
     {
         path: '/my-cargo/:lang',

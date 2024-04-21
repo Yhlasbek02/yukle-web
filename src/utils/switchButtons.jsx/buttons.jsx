@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import cargoSvg from "../../assets/cargo.svg"
 import transport from "../../assets/transport.svg"
 import cargoActiveSvg from "../../assets/cargoActive.svg"
@@ -7,25 +7,47 @@ import { SwitchButtonWrapper, ToggleButton, SwitchButtonContainer, FormBox, Butt
 import Cargo from '../../components/cargoContainer/cargo'
 import Transport from '../../components/transportContainer/transport'
 import Pagination from '../paginationTag/pagination'
-const SwitchButtonComponent = ({ isRight, handleClick }) => {
+import enData from "../../utils/locales/en/button.json";
+import ruData from "../../utils/locales/ru/button.json";
+import trData from "../../utils/locales/tr/button.json";
+const SwitchButtonComponent = ({ isRight, handleClick, language }) => {
+    const [translation, setTranslations] = useState(enData);
+    const loadTranslations = () => {
+        switch (language) {
+            case 'en':
+                setTranslations(enData);
+                break;
+            case 'ru':
+                setTranslations(ruData);
+                break;
+            case 'tr':
+                setTranslations(trData);
+                break;
+            default:
+                setTranslations(enData);
+        }
+    };
+    useEffect(() => {
+        loadTranslations();
+    }, [language]);
     return (
         <SwitchButtonWrapper>
             <ToggleButton isActive={!isRight} onClick={handleClick}>
-                <div style={{ display: "flex", justifyContent: "center", alignItems: 'center' }}><img src={isRight ? cargoSvg : cargoActiveSvg} alt="" style={{ width: '1.2rem', height: '1.2rem' }} /><span style={{marginLeft: "10px"}}>Cargo</span> </div>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: 'center' }}><img src={isRight ? cargoSvg : cargoActiveSvg} alt="" style={{ width: '1.2rem', height: '1.2rem' }} /><span style={{ marginLeft: "10px" }}>{translation.cargo}</span> </div>
             </ToggleButton>
             <SwitchButtonContainer>
                 <SwitchButtonLabel></SwitchButtonLabel>
                 <SwitchButton isRight={isRight} />
             </SwitchButtonContainer>
             <ToggleButton isActive={isRight} onClick={handleClick}>
-                <div style={{ display: "flex", width: '50%', justifyContent: "center", alignItems: 'center' }}><img src={isRight ? transportActiveSvg : transport} alt="" style={{ width: '1.2rem', height: '1.2rem'}} /><span style={{marginLeft: "10px"}}> Transport</span></div>
+                <div style={{ display: "flex", width: '50%', justifyContent: "center", alignItems: 'center' }}><img src={isRight ? transportActiveSvg : transport} alt="" style={{ width: '1.2rem', height: '1.2rem' }} /><span style={{ marginLeft: "10px" }}> {translation.transport}</span></div>
             </ToggleButton>
         </SwitchButtonWrapper>
     );
 };
 
 
-export default function Buttons() {
+export default function Buttons({ language }) {
     const [isRight, setIsRight] = useState(false);
 
     const handleToggle = () => {
@@ -33,20 +55,20 @@ export default function Buttons() {
     };
     return (
         <>
-        <FormBox>
-            <ButtonBox>
-                <SwitchButtonComponent isRight={isRight} handleClick={handleToggle} />
-            </ButtonBox>
-        </FormBox>
-        {isRight ? (
-            <>
-            <Transport />
-            </>
-            
-        ) : (
-            <Cargo />
-        )}
-        <Pagination />
+            <FormBox>
+                <ButtonBox>
+                    <SwitchButtonComponent isRight={isRight} handleClick={handleToggle} language={language} />
+                </ButtonBox>
+            </FormBox>
+            {isRight ? (
+                <>
+                    <Transport language={language} />
+                </>
+
+            ) : (
+                <Cargo language={language} />
+            )}
+            <Pagination />
         </>
     )
 }

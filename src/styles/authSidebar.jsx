@@ -19,3 +19,14 @@ export const AuthStyle = styled.div`
         width: 300px;
     }
 `;
+
+export const Right = styled.div`
+    width: 90%;
+    height: 100vh; /* Set height to match window height */
+    overflow-y: auto;
+`
+
+export const Left = styled.div`
+    width: 600px;
+    height: 100vh;
+`

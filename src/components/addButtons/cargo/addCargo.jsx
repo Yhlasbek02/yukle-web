@@ -3,7 +3,7 @@ import { IoIosAdd } from "react-icons/io"
 import { AddButtonContainer, Button } from '../style'
 import AddCargoModal from '../../modals/addCargoModal.jsx/addCargo';
 
-export default function AddCargo() {
+export default function AddCargo({language}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -20,7 +20,7 @@ export default function AddCargo() {
                     <IoIosAdd size={40} color='white' />
                 </Button>
             </AddButtonContainer>
-            {isModalOpen && <AddCargoModal onClose={closeModal} />}
+            {isModalOpen && <AddCargoModal onClose={closeModal} language={language} />}
         </>
     )
 }

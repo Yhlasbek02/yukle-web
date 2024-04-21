@@ -1,0 +1,14 @@
+{
+    "title":"Yeni ulaşım ekle",
+    "type":"Tür seçin",
+    "affiliation":"Bağlılık ülkesi",
+    "location_country": "Konum (ülke)",
+    "location_city":"Konum (şehir)",
+    "desired":"İstenen konum",
+    "name":"Ad",
+    "number":"Cep telefonu numarası",
+    "email":"E-posta",
+    "WhatsApp":"WhatsApp",
+    "additional": "Ek bilgi (isteğe bağlı)",
+    "add": "Taşıma ekle"
+}

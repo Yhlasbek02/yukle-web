@@ -1,0 +1,9 @@
+{
+    "title":"Kargom",
+    "date": "Tarih",
+    "weight":"Ağırlık",
+    "modalTitle": "Kargo",
+    "modalName":"Ad",
+    "modalNumber":"Cep telefonu numarası",
+    "modalEmail":"E-posta"
+}

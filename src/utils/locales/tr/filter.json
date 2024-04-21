@@ -1,0 +1,12 @@
+{
+    "title":"Filtre",
+    "cargo":"Kargo",
+    "transport":"Taşıma",
+    "type_cargo":"Kargo türü",
+    "type_transport":"Taşıma türü",
+    "belong":"Aittir",
+    "from":"Gönderen",
+    "to":"Kime",
+    "weight":"Ağırlık",
+    "search": "Arama"
+}

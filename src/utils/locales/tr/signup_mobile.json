@@ -1,0 +1,12 @@
+{
+    "title": "Kayıt Ol",
+    "name":"Ad",
+    "surname":"Soyadı",
+    "mobile":"Cep telefonu numarası",
+    "password":"Şifre",
+    "paragraph":"Kayıt ol",
+    "option":"e-posta",
+    "button":"Kaydol",
+    "login":"Giriş",
+    "privacy":"Gizlilik politikaları vb."
+}

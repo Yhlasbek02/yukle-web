@@ -1,0 +1,14 @@
+{
+    "title":"Add new transport",
+    "type":"Select type",
+    "affiliation":"Affiliation country",
+    "location_country":"Location (country)",
+    "location_city":"Location (city)",
+    "desired":"Desired location",
+    "name":"Name",
+    "number":"Mobile number",
+    "email":"Email",
+    "whatsApp":"WhatsApp",
+    "additional": "Additional information (optional)",
+    "add": "Add transport"
+}

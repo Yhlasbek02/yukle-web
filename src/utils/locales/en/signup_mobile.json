@@ -1,0 +1,12 @@
+{
+    "title": "Sign up",
+    "name":"Name",
+    "surname":"Surname",
+    "mobile":"Mobile number",
+    "password":"Password",
+    "paragraph":"Sign up with",
+    "option":"email",
+    "button":"Sign up",
+    "login":"Log in",
+    "privacy":"Privacy policies and etc."
+}

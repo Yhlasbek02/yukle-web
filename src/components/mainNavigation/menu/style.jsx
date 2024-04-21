@@ -22,8 +22,8 @@ export const Item = styled.div`
     padding-top: 5px;
     display: flex;
     img {
-        height: 40px;
-        width: 40px;
+        height: 37px;
+        width: 37px;
     }
 `
 

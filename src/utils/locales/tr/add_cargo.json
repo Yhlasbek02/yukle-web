@@ -1,0 +1,16 @@
+{
+    "title":"Yeni kargo ekle",
+    "type":"Tür seçin",
+    "from_country":"Gönderen (ülke)",
+    "from_city":"(Şehirden)",
+    "to_country":"Kime (ülkeye)",
+    "to_city":"(Şehre)",
+    "weight":"Ağırlık",
+    "type_transport":"Aktarım türü (isteğe bağlı)",
+    "name":"Ad",
+    "number":"Cep telefonu numarası",
+    "email":"E-posta",
+    "WhatsApp":"WhatsApp",
+    "additional": "Ek bilgi (isteğe bağlı)",
+    "add": "Kargo ekle"
+}

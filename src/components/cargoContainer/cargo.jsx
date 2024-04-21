@@ -3,14 +3,33 @@ import { Container, TypePart, From, Location, Properties, SingleProperty, Window
 import globusIcon from "../../assets/globus_1.svg"
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 import AddCargo from '../addButtons/cargo/addCargo'
-
-export default function Cargo() {
+import enData from "../../utils/locales/en/cargo.json";
+import ruData from "../../utils/locales/ru/cargo.json";
+import trData from "../../utils/locales/tr/cargo.json";
+export default function Cargo({ language }) {
     const [activeModal, setActiveModal] = useState(null);
-
+    const [translation, setTranslations] = useState(enData);
     const openModal = (containerIndex) => {
         setActiveModal(containerIndex);
     };
-
+    const loadTranslations = () => {
+        switch (language) {
+            case 'en':
+                setTranslations(enData);
+                break;
+            case 'ru':
+                setTranslations(ruData);
+                break;
+            case 'tr':
+                setTranslations(trData);
+                break;
+            default:
+                setTranslations(enData);
+        }
+    };
+    useEffect(() => {
+        loadTranslations();
+    }, [language]);
     const closeModal = () => {
         setActiveModal(null);
     };
@@ -45,8 +64,8 @@ export default function Cargo() {
                             </From>
                         </Location>
                         <Properties>
-                            <SingleProperty><span>Weight: </span><p>1 tonne</p> </SingleProperty>
-                            <SingleProperty><span>Date: </span><p>date</p> </SingleProperty>
+                            <SingleProperty><span>{translation.weight}: </span><p>1 tonne</p> </SingleProperty>
+                            <SingleProperty><span>{translation.date}: </span><p>date</p> </SingleProperty>
                         </Properties>
 
                     </Container>
@@ -58,25 +77,25 @@ export default function Cargo() {
                     <ModalContainer ref={modalRef}>
                         <ModalContent>
                             <ModalTitle>
-                                <p>Cargo</p>
+                                <p>{translation.modalTitle}</p>
                             </ModalTitle>
                             <ModalInfo>
-                                <span>Name</span>
+                                <span>{translation.modalName}</span>
                                 <h3>Name of user</h3>
                             </ModalInfo>
                             <ModalInfo>
-                                <span>Mobile number</span>
+                                <span>{translation.modalNumber}</span>
                                 <h3>Mobile number of user</h3>
                             </ModalInfo>
                             <ModalInfo>
-                                <span>Email</span>
+                                <span>{translation.modalEmail}</span>
                                 <h3>Email of user</h3>
                             </ModalInfo>
                         </ModalContent>
                     </ModalContainer>
                 </ModalOverlay>
             )}
-            <AddCargo />
+            <AddCargo language={language} />
         </>
 
 

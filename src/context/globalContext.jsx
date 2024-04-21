@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react"
 import axios from 'axios'
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BASE_URL = "http://localhost:3001/api/user/";
 
@@ -24,19 +25,24 @@ export const GlobalProvider = ({ children }) => {
 
     const signUpEmail = async (name, surname, email, password, lang) => {
         try {
-            const response = await axios.post(`${BASE_URL}auth/sign-up/email/${lang}`, { name, surname, email, password });
-            console.log(response);
-            if (response.data.status === 201) {
-                console.log("Verify email");
-            } else {
-
-                const errorMessage = response.data.message || 'Sign up failed';
-                alert(errorMessage);
-            }
+          const response = await axios.post(`${BASE_URL}auth/sign-up/email/${lang}`, {
+            name, surname, email, password 
+          });
+      
+          if (response.status === 201) {
+            toast.success(response.data.message);
+            return true;
+          }
         } catch (error) {
-            setError(error.response?.data?.message || 'Sign up failed');
+          if (error.response) {
+            toast.error(error.response.data.message);
+          } else {
+            toast.error('Sign up failed');
+          }
         }
-    }
+      };
+    
+
 
 
     const signUpMobile = async (name, surname, phoneNumber, password, lang) => {

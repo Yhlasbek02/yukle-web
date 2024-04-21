@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Buttons, Delete, FirstLine, Line, LogOut, SecondLine, SingleInfo, SupportTitle, TextArea, ThirdInfo, Title, Window } from './style';
-import enData from "../../utils/locales/profile/en/en.json"
-export default function Profile() {
-  const [language, setLanguage] = useState("en");
+import enData from "../../utils/locales/en/profile.json";
+import ruData from "../../utils/locales/ru/profile.json";
+import trData from "../../utils/locales/tr/profile.json";
+
+
+const Profile = ({ language }) => {
   const [translation, setTranslations] = useState(enData);
+
   const loadTranslations = () => {
     switch (language) {
       case 'en':
@@ -23,8 +27,8 @@ export default function Profile() {
   useEffect(() => {
     loadTranslations();
   }, [language]);
+
   return (
-    
     <Window>
       <FirstLine>
         <Title>{translation.title}</Title>
@@ -72,4 +76,6 @@ export default function Profile() {
       </ThirdInfo>
     </Window>
   );
-}
+};
+
+export default Profile;

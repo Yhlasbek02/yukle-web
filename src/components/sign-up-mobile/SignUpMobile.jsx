@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import { AuthStyle } from '../../styles/authSidebar';
 import { Link } from 'react-router-dom';
 import AuthSidebar from '../authSidebar/authSidebar';
 import { Card, Container, Mobile, RegisterLink } from '../../styles/authCard';
-
+import MobileForm from '../signUpForm/mobileForm';
+import LanguageSelectForAuth from '../../utils/languageForAuth';
+const getLanguageFromPath = () => {
+  const pathname = window.location.pathname;
+  const parts = pathname.split('/');
+  const lastPart = parts[parts.length - 1];
+  if (['en', 'ru', 'tr'].includes(lastPart)) {
+    return lastPart;
+  } else {
+    return 'en';
+  }
+};
 function SignUpMobile() {
+  const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
   const { signUpEmail } = useGlobalContext();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -15,7 +27,9 @@ function SignUpMobile() {
   const [language, setLang] = useState('en');
   const [error, setError] = useState('');
   const history = useNavigate();
-
+  useEffect(() => {
+    setSelectedLanguage(getLanguageFromPath());
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -40,26 +54,20 @@ function SignUpMobile() {
       </div>
       <div className='left'>
         <Card>
+          <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
           <Container>
-            <form onSubmit={handleSubmit}>
-              <h1>Sign up</h1>
-              <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-              <input type="text" placeholder="Surname" value={surname} onChange={(e) => setSurname(e.target.value)} />
-              <input type="email" placeholder="Mobile number" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <br />  
-              <span className='sign-mobile'>Sign up with&nbsp;<RegisterLink><Link to={`/${language}`}>email</Link></RegisterLink></span><br />  
-              <button type="submit">Sign Up</button><br />
-              <RegisterLink>
-                <Link to={`/login-mobile/${language}`}>Log in</Link>
-              </RegisterLink>
-              <br />
-              <div className='privacy'>
-                <span>Privacy policies and etc.</span>
-              </div>
-              
-            </form>
-            {error && <p>{error}</p>}
+            <MobileForm
+              submit={handleSubmit}
+              name={name}
+              setName={setName}
+              surname={surname}
+              setSurname={setSurname}
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              language={selectedLanguage}
+            />
           </Container>
 
         </Card>

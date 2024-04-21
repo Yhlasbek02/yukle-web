@@ -3,10 +3,31 @@ import { Container, From, Location, Properties, TypePart, SingleProperty, Window
 import globusIcon from '../../assets/globus_1.svg';
 import { FaArrowLeft } from 'react-icons/fa';
 import AddTransport from '../addButtons/transport/addTransport';
+import enData from "../../utils/locales/en/transport.json";
+import ruData from "../../utils/locales/ru/transport.json";
+import trData from "../../utils/locales/tr/transport.json";
 
-export default function Transport() {
+export default function Transport({ language }) {
+  const [translation, setTranslations] = useState(enData);
   const [activeModal, setActiveModal] = useState(null);
-
+  const loadTranslations = () => {
+    switch (language) {
+      case 'en':
+        setTranslations(enData);
+        break;
+      case 'ru':
+        setTranslations(ruData);
+        break;
+      case 'tr':
+        setTranslations(trData);
+        break;
+      default:
+        setTranslations(enData);
+    }
+  };
+  useEffect(() => {
+    loadTranslations();
+  }, [language]);
   const openModal = (containerIndex) => {
     setActiveModal(containerIndex);
   };
@@ -50,7 +71,7 @@ export default function Transport() {
               </From>
             </Location>
             <Properties>
-              <SingleProperty><span>Date: </span><p>date</p> </SingleProperty>
+              <SingleProperty><span>{translation.date}: </span><p>date</p> </SingleProperty>
             </Properties>
           </Container>
         ))}
@@ -60,25 +81,25 @@ export default function Transport() {
           <ModalContainer ref={modalRef}>
             <ModalContent>
               <ModalTitle>
-                <p>Transport</p>
+                <p>{translation.modalTitle}</p>
               </ModalTitle>
               <ModalInfo>
-                <span>Name</span>
+                <span>{translation.modalName}</span>
                 <h3>Name of user</h3>
               </ModalInfo>
               <ModalInfo>
-                <span>Mobile number</span>
+                <span>{translation.modalNumber}</span>
                 <h3>Mobile number of user</h3>
               </ModalInfo>
               <ModalInfo>
-                <span>Email</span>
+                <span>{translation.modalEmail}</span>
                 <h3>Email of user</h3>
               </ModalInfo>
             </ModalContent>
           </ModalContainer>
         </ModalOverlay>
       )}
-      <AddTransport />
+      <AddTransport language={language} />
     </>
   );
 }

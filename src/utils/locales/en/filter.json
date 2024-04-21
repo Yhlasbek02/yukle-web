@@ -1,0 +1,12 @@
+{
+    "title":"Filter",
+    "cargo":"Cargo",
+    "transport":"Transport",
+    "type_cargo":"Type of cargo",
+    "type_transport":"Type of transport",
+    "belong":"Belongs To",
+    "from":"From",
+    "to":"To",
+    "weight":"Weight",
+    "search":"Search"
+}
