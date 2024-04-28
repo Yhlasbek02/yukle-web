@@ -3,11 +3,13 @@ import { Button, Buttons, Delete, FirstLine, Line, LogOut, SecondLine, SingleInf
 import enData from "../../utils/locales/en/profile.json";
 import ruData from "../../utils/locales/ru/profile.json";
 import trData from "../../utils/locales/tr/profile.json";
+import { useGlobalContext } from '../../context/globalContext';
 
 
 const Profile = ({ language }) => {
   const [translation, setTranslations] = useState(enData);
-
+  const [profile, setProfile] = useState({});
+  const {getProfile} = useGlobalContext();
   const loadTranslations = () => {
     switch (language) {
       case 'en':
@@ -24,9 +26,22 @@ const Profile = ({ language }) => {
     }
   };
 
+  const fetchProfile = async (lang) => {
+    try {
+      const data = await getProfile(lang);
+      console.log(data);
+      setProfile(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
     loadTranslations();
+    fetchProfile(language)
   }, [language]);
+
+  
 
   return (
     <Window>
@@ -41,15 +56,21 @@ const Profile = ({ language }) => {
         <Line>
           <SingleInfo>
             <span>{translation.name}</span>
-            <h3>Jelil Tuwakow</h3>
+            <h3>
+              {profile.name} {profile.surname}
+            </h3>
           </SingleInfo>
           <SingleInfo>
             <span>{translation.mobile_number}</span>
-            <h3>99362242970</h3>
+            <h3>
+              {profile.phoneNumber || ''}
+            </h3>
           </SingleInfo>
           <SingleInfo>
             <span>{translation.email}</span>
-            <h3>dummycash17@gmail.com</h3>
+            <h3>
+              {profile.email}
+            </h3>
           </SingleInfo>
         </Line>
         <Line>

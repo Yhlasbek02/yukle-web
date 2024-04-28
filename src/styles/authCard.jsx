@@ -37,6 +37,11 @@ export const Card = styled.div`
         &:focus {
             border-color: #3498db;
         }
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
         &::placeholder {
             color: #4D9FFF;
             font-weight: 300;

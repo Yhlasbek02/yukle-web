@@ -24,13 +24,8 @@ const getLanguageFromPath = () => {
 
 function ForgotEmail() {
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
-  const { signUpEmail } = useGlobalContext();
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
+  const { sendCodeToEmail } = useGlobalContext();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [language, setLang] = useState('en');
-  const [error, setError] = useState('');
   const history = useNavigate();
   useEffect(() => {
     setSelectedLanguage(getLanguageFromPath());
@@ -58,17 +53,14 @@ function ForgotEmail() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // await signUpEmail(name, surname, email, password, language);
-      // localStorage.setItem('email', email);
-      // setEmail('');
-      // setName('');
-      // setSurname('');
-      // setPassword('');
-      // console.log('Sign up successful');
-      history(`/verify/${selectedLanguage}`);
+      const response = await sendCodeToEmail(email, selectedLanguage);
+      if (response) {
+        localStorage.setItem('email', email);
+        setEmail('');
+        history(`/verify-forgot/${selectedLanguage}`);
+      }
     } catch (error) {
-      alert(error);
-      setError(error.response?.data?.message || 'Sign up failed');
+      console.error(error);
     }
   };
 
@@ -96,7 +88,6 @@ function ForgotEmail() {
 
 
             </form>
-            {error && <p>{error}</p>}
           </Container>
 
         </Card>

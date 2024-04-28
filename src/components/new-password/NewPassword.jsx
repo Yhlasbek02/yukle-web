@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
 import { AuthStyle } from '../../styles/authSidebar';
-import { Link } from 'react-router-dom';
 import AuthSidebar from '../authSidebar/authSidebar';
 import { Card, Container, Input, EyeIcon, InputContainer } from '../../styles/authCard';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
@@ -23,12 +22,10 @@ const getLanguageFromPath = () => {
 
 function NewPassword() {
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
-  const { signUpEmail } = useGlobalContext();
+  const { changePassword } = useGlobalContext();
   const [password, setPassword] = useState('');
   const [password_conf, setPassword_Conf] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [language, setLang] = useState('en');
-  const [error, setError] = useState('');
   const history = useNavigate();
   useEffect(() => {
     setSelectedLanguage(getLanguageFromPath());
@@ -56,14 +53,10 @@ function NewPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // await signUpEmail(name, surname, email, password, language);
-      // localStorage.setItem('email', email);
-      // setEmail('');
-      // setName('');
-      // setSurname('');
-      // setPassword('');
-      // console.log('Sign up successful');
-      history(`/cargos/${language}`);
+      const isSuccess = await changePassword(password, password_conf, selectedLanguage)
+      if (isSuccess) {
+        history(`/main/${selectedLanguage}`);
+      }
     } catch (error) {
       alert(error);
       setError(error.response?.data?.message || 'Sign up failed');

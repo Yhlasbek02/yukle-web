@@ -25,62 +25,73 @@ export const GlobalProvider = ({ children }) => {
 
     const signUpEmail = async (name, surname, email, password, lang) => {
         try {
-          const response = await axios.post(`${BASE_URL}auth/sign-up/email/${lang}`, {
-            name, surname, email, password 
-          });
-      
-          if (response.status === 201) {
-            toast.success(response.data.message);
-            return true;
-          }
+            const response = await axios.post(`${BASE_URL}auth/sign-up/email/${lang}`, {
+                name, surname, email, password
+            });
+
+            if (response.status === 201) {
+                toast.success(response.data.message);
+                return true;
+            }
         } catch (error) {
-          if (error.response) {
-            toast.error(error.response.data.message);
-          } else {
-            toast.error('Sign up failed');
-          }
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Sign up failed');
+            }
         }
-      };
-    
+    };
+
 
 
 
     const signUpMobile = async (name, surname, phoneNumber, password, lang) => {
         try {
-            await axios.post(`${BASE_URL}sign-up/email/${lang}`, { name, surname, phoneNumber, password })
-                .catch((err) => {
-                    setError(err.response.data.message);
-                });
+            const response = await axios.post(`${BASE_URL}auth/sign-up/mobile/${lang}`, { name, surname, phoneNumber, password })
+            if (response.status === 201) {
+                toast.success(response.data.message);
+                return true;
+            }
         } catch (error) {
-            setError(error.response?.data?.message || 'Sign up failed');
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Sign up failed');
+            }
         }
     }
 
     const loginByEmail = async (email, password, lang) => {
         try {
-            const response = await axios.post(`${BASE_URL}login/email/${lang}`, { email, password })
-                .catch((err) => {
-                    setError(err.response.data.message)
-                });
-            if (response && response.data.token) {
+            const response = await axios.post(`${BASE_URL}auth/login/email/${lang}`, { email, password })
+            if (response.status) {
                 localStorage.setItem('token', response.data.token);
+                toast.success(response.data.message);
+                return true;
             }
         } catch (error) {
-            setError(error.response?.data?.message || 'Login failed');
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Login failed');
+            }
         }
     }
 
     const loginByMobile = async (phoneNumber, password, lang) => {
         try {
-            const response = await axios.post(`${BASE_URL}login/mobile/${lang}`, { phoneNumber, password })
-                .catch((err) => {
-                    setError(err.response.data.message)
-                });
-            if (response && response.data.token) {
+            const response = await axios.post(`${BASE_URL}auth/login/mobile/${lang}`, { phoneNumber, password })
+            if (response.status) {
                 localStorage.setItem('token', response.data.token);
+                toast.success(response.data.message);
+                return true;
             }
         } catch (error) {
-            setError(error.response?.data?.message || 'Login failed');
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Login failed');
+            }
         }
     }
 
@@ -92,43 +103,72 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    const resendCode = async (email) => {
+    const sendCodeToEmail = async (email, lang) => {
         try {
-            await axios.post(`${BASE_URL}resend-code/email/`, email)
-                .catch((err) => {
-                    setError(err.response.data.message);
-                });
+            const response = await axios.post(`${BASE_URL}auth/resend-code/email/${lang}`, { email })
+            if (response.status) {
+                localStorage.setItem('email', email);
+                toast.success(response.data.message);
+                return true;
+            }
         } catch (error) {
-            setError(error.response?.data?.message || "Can't send code");
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Server error');
+            }
+        }
+    }
+
+    const sendCodeToMobile = async (phoneNumber, lang) => {
+        try {
+            const response = await axios.post(`${BASE_URL}auth/resend-code/mobile/${lang}`, { phoneNumber })
+            if (response.status) {
+                localStorage.setItem('email', phoneNumber);
+                toast.success(response.data.message);
+                return true;
+            }
+        } catch (error) {
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Server error');
+            }
         }
     }
 
     const verifyCode = async (otp, email, lang) => {
         try {
             const response = await axios.post(`${BASE_URL}auth/verify/${lang}`, { otp: otp, email: email })
-                .catch((err) => {
-                    setError(err.response.message)
-                });
-            if (response & response.data.token) {
+            if (response) {
+                console.log(response.data)
                 localStorage.setItem('token', response.data.token);
+                toast.success(response.data.message)
+                return true;
             }
         } catch (error) {
-            setError(error.response?.data?.message || "Verification error");
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Verification failed');
+            }
         }
     }
 
     const getProfile = async (lang) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}profile/${lang}`, {
+            const response = await axios.get(`${BASE_URL}auth/profile/${lang}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
             })
                 .catch((err) => {
-                    setError(err.response.data.message)
-                });
-            setProfile(response.data)
+                    console.error(err.response.data.message);
+                })
+            console.log(response.data);
+            return response.data
+
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Profile error");
@@ -138,19 +178,24 @@ export const GlobalProvider = ({ children }) => {
     const changePassword = async (password, confirmPassword, lang) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.post(`${BASE_URL}change-pass/${lang}`, { password, confirmPassword },
+            const response = await axios.post(`${BASE_URL}auth/change-pass/${lang}`,
+                { password, confirmPassword },
                 {
                     headers: {
                         'authorization': `Bearer ${token}`
                     }
                 }
             )
-                .catch((err) => {
-                    setError(err.response.data.message)
-                })
+            if (response.status) {
+                toast.success(response.data.message);
+                return true;
+            }
         } catch (error) {
-            console.error(error);
-            setError(error.response?.data?.message || "Change password error");
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Change password failed');
+            }
         }
     }
 
@@ -283,9 +328,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setTransportTypes({
-                types: response.data.types
-            });
+            return response.data
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Cargo error");
@@ -385,7 +428,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setCargoTypes(response.data);
+            return response.data;
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Cargo type error");
@@ -395,7 +438,7 @@ export const GlobalProvider = ({ children }) => {
     const getCountries = async (lang, searchKey) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}user/countries/${lang}?searchKey=${searchKey}`, {
+            const response = await axios.get(`${BASE_URL}countries/${lang}?searchKey=${searchKey}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -403,9 +446,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setCountries({
-                countries: response.data.countries
-            })
+            return response.data
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Countries error");
@@ -415,7 +456,7 @@ export const GlobalProvider = ({ children }) => {
     const getCities = async (lang, searchKey, countryId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}user/cities/${countryId}/${lang}?searchKey=${searchKey}`, {
+            const response = await axios.get(`${BASE_URL}cities/${countryId}/${lang}?searchKey=${searchKey}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -423,9 +464,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setCities({
-                cities: response.data.cities
-            })
+            return response.data
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Cities error");
@@ -526,7 +565,8 @@ export const GlobalProvider = ({ children }) => {
             loginByEmail,
             loginByMobile,
             logout,
-            resendCode,
+            sendCodeToEmail,
+            sendCodeToMobile,
             verifyCode,
             getProfile,
             changeAccount,

@@ -19,9 +19,10 @@ const getLanguageFromPath = () => {
 };
 function SignUpMobile() {
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
-  const { signUpEmail } = useGlobalContext();
+  const { signUpMobile } = useGlobalContext();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [language, setLang] = useState('en');
@@ -33,14 +34,16 @@ function SignUpMobile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signUpEmail(name, surname, email, password, language);
-      localStorage.setItem('email', email);
-      setEmail('');
-      setName('');
-      setSurname('');
-      setPassword('');
-      console.log('Sign up successful');
-      history(`/verify/${language}`);
+      const isSuccess = await signUpMobile(name, surname, phoneNumber, password, language);
+      if (isSuccess) {
+        localStorage.setItem('email', phoneNumber);
+        setEmail('');
+        setName('');
+        setPhoneNumber('');
+        setPassword('');
+        console.log('Sign up successful');
+        history(`/verify/${selectedLanguage}`);
+      }
     } catch (error) {
       alert(error);
       setError(error.response?.data?.message || 'Sign up failed');
@@ -62,8 +65,8 @@ function SignUpMobile() {
               setName={setName}
               surname={surname}
               setSurname={setSurname}
-              email={email}
-              setEmail={setEmail}
+              email={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
               password={password}
               setPassword={setPassword}
               language={selectedLanguage}

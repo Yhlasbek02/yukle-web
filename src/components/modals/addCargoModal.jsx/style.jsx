@@ -54,7 +54,7 @@ export const ModalBody = styled.div`
         border: 1px solid #4D9FFF;
         border-radius: 15px;
         color: #4D9FFF;
-        font-size: 1.1rem;
+        font-size: 1rem;
         padding-left: 0.5rem;
     }
 `

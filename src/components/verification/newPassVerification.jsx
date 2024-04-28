@@ -21,7 +21,7 @@ const getLanguageFromPath = () => {
   }
 };
 
-function Verification() {
+function VerificationForgot() {
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
   const { verifyCode } = useGlobalContext();
   const [language, setLang] = useState('en');
@@ -102,7 +102,7 @@ function Verification() {
       if (isSuccess) {
         setOTP(['', '', '', '']); // Reset OTP digits
         console.log('Verification successful');
-        history(`/main/${language}`);
+        history(`/new-password/${language}`);
       }
       
     } catch (error) {
@@ -161,4 +161,4 @@ function Verification() {
   );
 }
 
-export default Verification;
+export default VerificationForgot;

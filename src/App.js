@@ -14,6 +14,7 @@ import MyCargo from "./components/my-cargo/MyCargo";
 import MyTransport from "./components/my-transport/MyTransport";
 import Profile from "./components/profile/Profile";
 import Notifications from "./components/notifications/Notifications";
+import VerificationForgot from "./components/verification/newPassVerification";
 
 
 
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
     {
         path: '/verify/:lang',
         element: <Verification />
+    },
+    {
+        path: '/verify-forgot/:lang',
+        element: <VerificationForgot />
     },
     {
         path: '/new-password/:lang',

@@ -21,6 +21,7 @@ import userActive from "../../assets/User_active.svg";
 import enData from "../../utils/locales/en/menu.json";
 import ruData from "../../utils/locales/ru/menu.json";
 import trData from "../../utils/locales/tr/menu.json";
+import { useGlobalContext } from '../../context/globalContext';
 
 const getLanguageFromPath = () => {
   const pathname = window.location.pathname;
@@ -35,6 +36,8 @@ const getLanguageFromPath = () => {
 
 export default function Cargos() {
   const [translation, setTranslations] = useState(enData);
+  const [profile, setProfile] = useState({});
+  const {getProfile} = useGlobalContext();
   const [activeLink, setActiveLink] = useState('Main');
   const [notificationsActive, setNotificationsActive] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
@@ -58,7 +61,17 @@ export default function Cargos() {
   }, []);
   useEffect(() => {
     loadTranslations();
+    fetchProfile(selectedLanguage)
   }, [selectedLanguage]);
+  const fetchProfile = async (lang) => {
+    try {
+      const data = await getProfile(lang);
+      console.log(data);
+      setProfile(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   const handleLinkClick = (link) => {
     setActiveLink(link);
     if (link === 'Notification') {
@@ -97,7 +110,9 @@ export default function Cargos() {
               <Username>
                 <div className="left">
                   <h4>{translation.greeting},</h4>
-                  <h3>Jelil Tuwakow</h3>
+                  <h3>
+                    {profile.name} {profile.surname}
+                  </h3>
                 </div>
                 <div className="right">
                   <LanguageSelect selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />

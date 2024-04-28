@@ -24,13 +24,8 @@ const getLanguageFromPath = () => {
 
 function ForgotMobile() {
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
-  const { signUpEmail } = useGlobalContext();
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [language, setLang] = useState('en');
-  const [error, setError] = useState('');
+  const [mobile, setMobile] = useState('');
+  const { sendCodeToMobile } = useGlobalContext();
   const history = useNavigate();
   useEffect(() => {
     setSelectedLanguage(getLanguageFromPath());
@@ -58,17 +53,14 @@ function ForgotMobile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // await signUpEmail(name, surname, email, password, language);
-      // localStorage.setItem('email', email);
-      // setEmail('');
-      // setName('');
-      // setSurname('');
-      // setPassword('');
-      // console.log('Sign up successful');
-      history(`/verify/${selectedLanguage}`);
+      const response = await sendCodeToMobile(mobile, selectedLanguage);
+      if (response) {
+        localStorage.setItem('email', mobile);
+        setMobile('');
+        history(`/verify-forgot/${selectedLanguage}`);
+      }
     } catch (error) {
-      alert(error);
-      setError(error.response?.data?.message || 'Sign up failed');
+      console.error(error);
     }
   };
 
@@ -85,7 +77,7 @@ function ForgotMobile() {
               <h1 style={{ fontSize: "1.8rem" }}>
                 {translation.Title}
               </h1>
-              <input type="email" placeholder={translation.mobile} value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input type="number" placeholder={translation.mobile} value={mobile} onChange={(e) => setMobile(e.target.value)} />
               <br />
               <span className='sign-mobile'>{translation.paragraph}&nbsp;<RegisterLink><Link to={`/forgot-email/${selectedLanguage}`}>{translation.option_email}</Link></RegisterLink></span><br />
               <div style={{ marginTop: "100px" }}>
@@ -96,7 +88,6 @@ function ForgotMobile() {
 
 
             </form>
-            {error && <p>{error}</p>}
           </Container>
 
         </Card>

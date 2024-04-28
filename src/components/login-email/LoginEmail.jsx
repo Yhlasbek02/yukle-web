@@ -20,12 +20,10 @@ const getLanguageFromPath = () => {
 };
 
 function LoginEmail() {
-  const { signUpEmail } = useGlobalContext();
+  const { loginByEmail } = useGlobalContext();
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [language, setLang] = useState('en');
-  const [error, setError] = useState('');
   const history = useNavigate();
   useEffect(() => {
     setSelectedLanguage(getLanguageFromPath());
@@ -33,17 +31,17 @@ function LoginEmail() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signUpEmail(email, password, language);
-      localStorage.setItem('email', email);
-      setEmail('');
-      setName('');
-      setSurname('');
-      setPassword('');
-      console.log('Sign up successful');
-      history(`/verify/${language}`);
+      console.log(email, password);
+      const isSuccess = await loginByEmail(email, password, selectedLanguage);
+      console.log(isSuccess)
+      if (isSuccess) {
+        setEmail('');
+        setPassword('');
+        console.log('Login successful');
+        history(`/main/${selectedLanguage}`);
+      }
     } catch (error) {
-      alert(error);
-      setError(error.response?.data?.message || 'Sign up failed');
+      console.error(error.response?.data?.message || 'Sign up failed');
     }
   };
 

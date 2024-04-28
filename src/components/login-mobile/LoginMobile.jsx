@@ -20,12 +20,10 @@ const getLanguageFromPath = () => {
 };
 
 function LoginMobile() {
-  const { signUpEmail } = useGlobalContext();
+  const { loginByMobile } = useGlobalContext();
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [language, setLang] = useState('en');
-  const [error, setError] = useState('');
   const history = useNavigate();
   useEffect(() => {
     setSelectedLanguage(getLanguageFromPath());
@@ -33,17 +31,16 @@ function LoginMobile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signUpEmail(email, password, language);
-      localStorage.setItem('email', email);
-      setEmail('');
-      setName('');
-      setSurname('');
-      setPassword('');
-      console.log('Sign up successful');
-      history(`/verify/${language}`);
+      const isSuccess = await loginByMobile(phoneNumber, password, selectedLanguage);
+      if (isSuccess) {
+        setEmail('');
+        setPassword('');
+        console.log('Login successful');
+        history(`/main/${selectedLanguage}`);
+      }
     } catch (error) {
-      alert(error);
-      setError(error.response?.data?.message || 'Sign up failed');
+      console.log(error)
+      console.error(error.response?.data?.message || 'Sign up failed');
     }
   };
 
@@ -58,8 +55,8 @@ function LoginMobile() {
           <Container>
             <MobileForm
               submit={handleSubmit}
-              email={email}
-              setEmail={setEmail}
+              phoneNumber={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
               password={password}
               setPassword={setPassword}
               language={selectedLanguage}

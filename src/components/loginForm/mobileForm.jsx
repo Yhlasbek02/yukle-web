@@ -5,7 +5,7 @@ import enData from "../../utils/locales/en/login_mobile.json";
 import ruData from "../../utils/locales/ru/login_mobile.json";
 import trData from "../../utils/locales/tr/login_mobile.json";
 
-export default function MobileForm({ submit, email, setEmail, password, setPassword, language }) {
+export default function MobileForm({ submit, phoneNumber, setPhoneNumber, password, setPassword, language }) {
     const [translation, setTranslations] = useState(enData);
     const loadTranslations = () => {
         switch (language) {
@@ -30,7 +30,7 @@ export default function MobileForm({ submit, email, setEmail, password, setPassw
             <h1>
                 {translation.title}
             </h1>
-            <input type="email" placeholder={translation.mobile} value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="number" placeholder={translation.mobile} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
             <input type="password" placeholder={translation.password} value={password} onChange={(e) => setPassword(e.target.value)} />
             <br />
             <span className='sign-mobile'>{translation.paragraph}&nbsp;<RegisterLink><Link to={`/login-email/${language}`}>{translation.option}</Link></RegisterLink></span><br />
