@@ -6,7 +6,7 @@ export const Card = styled.div`
     background-color: #ffffff;
     padding: 10px;
     border-radius: 30px;
-    height: 100vh;
+    height: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     form {
         margin-top: 10%;
@@ -73,6 +73,7 @@ export const Card = styled.div`
 export const Container = styled.div`
     text-align: center;
     padding: 10px;
+    height: 500px;
     display: flex;
     justify-content: center; /* Horizontally center elements */
     align-items: center;
@@ -81,16 +82,13 @@ export const Container = styled.div`
     }
     h1 {
         font-weight: 800;
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     span {
         font-weight: 300;
-        font-size: 15px;
+        font-size: 13px;
         color: #4D9FFF;
         display: inline-flex;
-    }
-    .privacy {
-        margin-top: 10px;
     }
 `
 

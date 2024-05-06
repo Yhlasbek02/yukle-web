@@ -166,7 +166,6 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     console.error(err.response.data.message);
                 })
-            console.log(response.data);
             return response.data
 
         } catch (error) {
@@ -195,6 +194,54 @@ export const GlobalProvider = ({ children }) => {
                 toast.error(error.response.data.message);
             } else {
                 toast.error('Change password failed');
+            }
+        }
+    }
+
+    const addTransport = async (language, typeId, affiliationCountry, locationCountry, locationCity, desiredDirection, name, number, email, whatsapp, additional_info) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${BASE_URL}transport/add/${language}`, {
+                typeId, affiliationCountry, locationCountry, locationCity, desiredDirection, number, name, email, whatsapp, additional_info
+            }, {
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
+            })
+            if (response.status) {
+                toast.success(response.data.message);
+                return true;
+            }
+        } catch (error) {
+            if (error.response) {
+                console.log(error);
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Add transport failed');
+            }
+        }
+    }
+
+    const addCargo = async (language, typeId, fromCountry, fromCity, toCountry, toCity, weight, typeTransport, phoneNumber, name, email, whatsApp, additional_info) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${BASE_URL}cargo/add/${language}`, {
+                typeId, fromCountry, fromCity, toCountry, toCity, weight, typeTransport, phoneNumber, name, email, whatsApp, additional_info
+            }, {
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
+            })
+            if (response.status) {
+                toast.success(response.data.message);
+                return true;
+            }
+        } catch (error) {
+            if (error.response) {
+                console.log(error);
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Add cargo failed');
             }
         }
     }
@@ -331,10 +378,10 @@ export const GlobalProvider = ({ children }) => {
             return response.data
         } catch (error) {
             console.error(error);
-            setError(error.response?.data?.message || "Cargo error");
+            setError(error.response?.data?.message || "Transport error");
         }
     }
-
+    
     const getCargos = async (page, lang) => {
         try {
             const token = localStorage.getItem('token');
@@ -346,12 +393,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setCargos({
-                cargos: response.data.cargos,
-                totalPages: response.data.totalPages,
-                totalCount: response.data.totalCount,
-                currentPage: response.data.currentPage,
-            });
+            return response.data;
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Cargo error");
@@ -565,6 +607,7 @@ export const GlobalProvider = ({ children }) => {
             loginByEmail,
             loginByMobile,
             logout,
+            addCargo,
             sendCodeToEmail,
             sendCodeToMobile,
             verifyCode,
@@ -586,7 +629,8 @@ export const GlobalProvider = ({ children }) => {
             getCities,
             addMessage,
             getMessages,
-            getNotifications
+            getNotifications,
+            addTransport
         }}>
             {children}
         </GlobalContext.Provider>

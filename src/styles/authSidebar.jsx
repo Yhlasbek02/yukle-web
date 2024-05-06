@@ -9,15 +9,7 @@ export const AuthStyle = styled.div`
     background-position: center;
     width: 100%;
     height: 100vh;
-    justify-content: flex-end; /* Align items to the right */
-    .right {
-        width: 90%;
-        height: 100vh; /* Set height to match window height */
-        overflow-y: auto; /* Add vertical scroll if content exceeds window height */
-    }
-    .left: {
-        width: 300px;
-    }
+    justify-content: flex-end;
 `;
 
 export const Right = styled.div`
@@ -28,5 +20,4 @@ export const Right = styled.div`
 
 export const Left = styled.div`
     width: 600px;
-    height: 100vh;
 `

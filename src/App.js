@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUpEmail from "./components/sign-up-email/SignUpEmail";
 import ForgotEmail from "./components/forgot-email/ForgotEmail";
 import ForgotMobile from "./components/forgot-mobile/ForgotMobile";
@@ -16,81 +16,29 @@ import Profile from "./components/profile/Profile";
 import Notifications from "./components/notifications/Notifications";
 import VerificationForgot from "./components/verification/newPassVerification";
 
-
-
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <SignUpEmail />
-    },
-    {
-        path: '/:lang',
-        element: <SignUpEmail />
-    },
-    {
-        path: '/signup-mobile/:lang',
-        element: <SignUpMobile />
-    },
-    {
-        path: '/login-email/:lang',
-        element: <LoginEmail />
-    },
-    {
-        path: '/login-mobile/:lang',
-        element: <LoginMobile />
-    },
-    {
-        path: '/forgot-email/:lang',
-        element: <ForgotEmail />
-    },
-    {
-        path: '/forgot-mobile/:lang',
-        element: <ForgotMobile />
-    },
-    {
-        path: '/verify/:lang',
-        element: <Verification />
-    },
-    {
-        path: '/verify-forgot/:lang',
-        element: <VerificationForgot />
-    },
-    {
-        path: '/new-password/:lang',
-        element: <NewPassword />
-    },
-    {
-        path: '/main/:lang',
-        element: <Cargos />
-    },
-    {
-        path: '/my-cargo/:lang',
-        element: <MyCargo />
-    },
-    {
-        path: '/my-transport/:lang',
-        element: <MyTransport />
-    },
-    {
-        path: '/profile/:lang',
-        element: <Profile />
-    },
-    {
-        path: '/notifications/:lang',
-        element: <Notifications />
-    },
-    {
-        path: '*',
-        element: <PageNotFound />
-    }
-])
-
-
 const App = () => {
     return (
-        <>
-            <RouterProvider router={router}></RouterProvider>
-        </>
+        <Router>
+            <Routes> {/* Define your routes using Routes */}
+                <Route path="/" element={<SignUpEmail />} />
+                <Route path="/:lang" element={<SignUpEmail />} />
+                <Route path="/signup-mobile/:lang" element={<SignUpMobile />} />
+                <Route path="/login-email/:lang" element={<LoginEmail />} />
+                <Route path="/login-mobile/:lang" element={<LoginMobile />} />
+                <Route path="/forgot-email/:lang" element={<ForgotEmail />} />
+                <Route path="/forgot-mobile/:lang" element={<ForgotMobile />} />
+                <Route path="/verify/:lang" element={<Verification />} />
+                <Route path="/verify-forgot/:lang" element={<VerificationForgot />} />
+                <Route path="/new-password/:lang" element={<NewPassword />} />
+                <Route path="/main/:lang" element={<Cargos />} />
+                <Route path="/my-cargo/:lang" element={<MyCargo />} />
+                <Route path="/my-transport/:lang" element={<MyTransport />} />
+                <Route path="/profile/:lang" element={<Profile />} />
+                <Route path="/notifications/:lang" element={<Notifications />} />
+                <Route path="*" element={<PageNotFound />} />
+            </Routes>
+        </Router>
     );
 };
+
 export default App;

@@ -23,9 +23,9 @@ export const MainLayout = styled.div`
 `;
 
 export const NavStyled = styled.nav`
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: 20px;
-    width: 30%;
+    width: 35%;
     // overflow-y: auto;
     display: flex;
     flex-direction: column;

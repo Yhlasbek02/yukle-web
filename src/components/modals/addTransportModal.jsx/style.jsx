@@ -49,7 +49,7 @@ export const ModalBody = styled.div`
     select {
         width: 100%;
         padding: 10px;
-        height: 2.5rem;
+        height: 2.7rem;
         margin-bottom: 10px;
         border: 1px solid #4D9FFF;
         border-radius: 15px;

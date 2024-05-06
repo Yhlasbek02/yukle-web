@@ -6,28 +6,42 @@ import AddCargo from '../addButtons/cargo/addCargo'
 import enData from "../../utils/locales/en/cargo.json";
 import ruData from "../../utils/locales/ru/cargo.json";
 import trData from "../../utils/locales/tr/cargo.json";
+import { useGlobalContext } from '../../context/globalContext'
+import Pagination from '../../utils/paginationTag/pagination'
 export default function Cargo({ language }) {
+    const { getCargos } = useGlobalContext()
     const [activeModal, setActiveModal] = useState(null);
     const [translation, setTranslations] = useState(enData);
-    const openModal = (containerIndex) => {
+    const [cargos, setCargos] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
+    const [singleCargoId, setSingleCargoId] = useState(null);
+    const openModal = (containerIndexd) => {
         setActiveModal(containerIndex);
     };
     const loadTranslations = () => {
-        switch (language) {
-            case 'en':
-                setTranslations(enData);
-                break;
-            case 'ru':
-                setTranslations(ruData);
-                break;
-            case 'tr':
-                setTranslations(trData);
-                break;
-            default:
-                setTranslations(enData);
-        }
+        const translations = {
+            'en': enData,
+            'ru': ruData,
+            'tr': trData
+        };
+        setTranslations(translations[language] || enData);
     };
+
+    const fetchCargos = async () => {
+        try {
+            const cargoData = await getCargos(page, language);
+            setCargos(cargoData.cargos);
+            setPage(cargoData.currentPage);
+            setTotalPage(cargoData.totalPages);
+            console.log(cargos);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(() => {
+        fetchCargos();
         loadTranslations();
     }, [language]);
     const closeModal = () => {
@@ -52,8 +66,35 @@ export default function Cargo({ language }) {
     return (
         <>
             <Window>
-                {Array(8).fill().map((_, containerIndex) => (
-                    <Container key={containerIndex} onClick={() => openModal(containerIndex)}>
+                {cargos.length > 0 ? (
+                    cargos.map((cargo) => (
+                        <Container key={cargo.uuid} onClick={() => openModal(cargo.uuid)}>
+                            <TypePart>{cargo.type.nameEn || ''}</TypePart>
+                            <Location>
+                                <From>
+                                    <img src={globusIcon} alt="" />
+                                    <FaArrowRight color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
+                                    {cargo.uuid}
+                                </From>
+                                <From>
+                                    <img src={globusIcon} alt="" />
+                                    <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
+                                    {cargo.uuid}
+                                </From>
+                            </Location>
+                            <Properties>
+                                <SingleProperty><span>{translation.weight}: </span><p>{cargo.weight}</p> </SingleProperty>
+                                <SingleProperty><span>{translation.date}: </span><p>{cargo.date}</p> </SingleProperty>
+                            </Properties>
+                        </Container>
+                    ))
+                ) : (
+                    <div>No cargos available</div>
+                )}
+
+
+                {/* {Array().fill().map((cargo) => (
+                    <Container key={cargo} onClick={() => openModal(cargo.uuid)}>
                         <TypePart>Cargo type</TypePart>
                         <Location>
                             <From>
@@ -69,7 +110,8 @@ export default function Cargo({ language }) {
                         </Properties>
 
                     </Container>
-                ))}
+                ))} */}
+                <Pagination currentPage={page} totalPages={totalPage} />
 
             </Window>
             {activeModal !== null && (

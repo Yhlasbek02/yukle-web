@@ -68,7 +68,6 @@ export default function Buttons({ language }) {
             ) : (
                 <Cargo language={language} />
             )}
-            <Pagination />
         </>
     )
 }
