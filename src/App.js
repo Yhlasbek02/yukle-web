@@ -9,7 +9,7 @@ import SignUpMobile from "./components/sign-up-mobile/SignUpMobile";
 import LoginEmail from "./components/login-email/LoginEmail";
 import LoginMobile from "./components/login-mobile/LoginMobile";
 import Verification from "./components/verification/Verification";
-import Cargos from "./components/cargos/Cargos";
+import Main from "./components/main/Main";
 import MyCargo from "./components/my-cargo/MyCargo";
 import MyTransport from "./components/my-transport/MyTransport";
 import Profile from "./components/profile/Profile";
@@ -30,7 +30,7 @@ const App = () => {
                 <Route path="/verify/:lang" element={<Verification />} />
                 <Route path="/verify-forgot/:lang" element={<VerificationForgot />} />
                 <Route path="/new-password/:lang" element={<NewPassword />} />
-                <Route path="/main/:lang" element={<Cargos />} />
+                <Route path="/main/:lang" element={<Main />} />
                 <Route path="/my-cargo/:lang" element={<MyCargo />} />
                 <Route path="/my-transport/:lang" element={<MyTransport />} />
                 <Route path="/profile/:lang" element={<Profile />} />

@@ -102,7 +102,7 @@ export const ModalContainer = styled.div`
     border-radius: 20px;
     padding: 20px;
     justify-content: center;
-    width: 30%;
+    width: 35%;
     height: 60%;
     overflow-y: auto;
 `;

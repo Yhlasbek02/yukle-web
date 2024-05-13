@@ -3,7 +3,7 @@ export const PaginationContainer = styled.div`
     justify-content: center;
     margin: 1rem;
     display:flex;
-    // position: absolute;
+    margin-left: 37%;
     align-items: center;
     bottom: 0;
     padding-bottom: 0.5rem;

@@ -6,7 +6,6 @@ import transportActiveSvg from "../../assets/transActive.svg"
 import { SwitchButtonWrapper, ToggleButton, SwitchButtonContainer, FormBox, ButtonBox, SwitchButtonLabel, SwitchButton } from './style';
 import Cargo from '../../components/cargoContainer/cargo'
 import Transport from '../../components/transportContainer/transport'
-import Pagination from '../paginationTag/pagination'
 import enData from "../../utils/locales/en/button.json";
 import ruData from "../../utils/locales/ru/button.json";
 import trData from "../../utils/locales/tr/button.json";
@@ -47,17 +46,23 @@ const SwitchButtonComponent = ({ isRight, handleClick, language }) => {
 };
 
 
-export default function Buttons({ language }) {
-    const [isRight, setIsRight] = useState(false);
+export default function Buttons({ language, isRight, setIsRight }) {
 
+    useEffect(() => {
+        const lastButtonState = localStorage.getItem('isRight');
+        setIsRight(lastButtonState === 'true');
+    }, []);
+    
     const handleToggle = () => {
         setIsRight(prevState => !prevState);
+        localStorage.setItem('isRight', (!isRight).toString()); 
     };
+
     return (
         <>
             <FormBox>
                 <ButtonBox>
-                    <SwitchButtonComponent isRight={isRight} handleClick={handleToggle} language={language} />
+                    <SwitchButtonComponent isRight={isRight} setIsRight={setIsRight} handleClick={handleToggle} language={language} />
                 </ButtonBox>
             </FormBox>
             {isRight ? (

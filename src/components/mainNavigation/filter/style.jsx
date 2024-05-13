@@ -126,3 +126,10 @@ export const SearchButton = styled.button`
     margin-left: 2.5rem;
     width: 70%;
 `
+
+export const ModalOption = styled.option`
+    font-size: 1rem;
+    background-color: #fff;
+    color: #4D9FFF;
+    padding: 15px;
+`

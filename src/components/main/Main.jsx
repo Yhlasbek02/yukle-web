@@ -34,13 +34,18 @@ const getLanguageFromPath = () => {
   }
 };
 
-export default function Cargos() {
+export default function Main() {
   const [translation, setTranslations] = useState(enData);
   const [profile, setProfile] = useState({});
+  const [isRight, setIsRight] = useState(false);
   const {getProfile} = useGlobalContext();
   const [activeLink, setActiveLink] = useState('Main');
   const [notificationsActive, setNotificationsActive] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState(getLanguageFromPath());
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    const storedLanguage = localStorage.getItem('selectedLanguage');
+    return storedLanguage || getLanguageFromPath();
+  });
+
   const loadTranslations = () => {
     switch (selectedLanguage) {
       case 'en':
@@ -56,13 +61,23 @@ export default function Cargos() {
         setTranslations(enData);
     }
   };
-  useEffect(() => {
-    setSelectedLanguage(getLanguageFromPath());
-  }, []);
+
   useEffect(() => {
     loadTranslations();
-    fetchProfile(selectedLanguage)
+    fetchProfile(selectedLanguage);
+    localStorage.setItem('selectedLanguage', selectedLanguage);
   }, [selectedLanguage]);
+
+  useEffect(() => {
+    const lastButtonState = localStorage.getItem('isRight');
+    setIsRight(lastButtonState === 'true');
+  }, []);
+
+  useEffect(() => {
+    const storedActiveLink = localStorage.getItem('activeLink');
+    setActiveLink(storedActiveLink || 'Main');
+  }, []);
+
   const fetchProfile = async (lang) => {
     try {
       const data = await getProfile(lang);
@@ -71,7 +86,8 @@ export default function Cargos() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
+
   const handleLinkClick = (link) => {
     setActiveLink(link);
     if (link === 'Notification') {
@@ -79,14 +95,13 @@ export default function Cargos() {
     } else {
       setNotificationsActive(false);
     }
+    localStorage.setItem('activeLink', link);
   };
-
-
 
   const renderContent = () => {
     switch (activeLink) {
       case 'Main':
-        return <Buttons language={selectedLanguage} />;
+        return <Buttons language={selectedLanguage} isRight={isRight} setIsRight={setIsRight} />;
       case 'Cargo':
         return <MyCargo language={selectedLanguage} />;
       case 'Transport':
@@ -103,7 +118,6 @@ export default function Cargos() {
   return (
     <AppStyled>
       <MainLayout>
-        {/* <Navigation /> */}
         <NavStyled>
           <div className="menu-items">
             <li>
@@ -162,7 +176,7 @@ export default function Cargos() {
               </MenuStyle>
             </li>
             <li>
-              <Filter language={selectedLanguage} />
+            <Filter language={selectedLanguage} isRight={isRight} setIsRight={setIsRight} />
             </li>
           </div>
         </NavStyled>

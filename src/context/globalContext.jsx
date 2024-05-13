@@ -198,11 +198,11 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    const addTransport = async (language, typeId, affiliationCountry, locationCountry, locationCity, desiredDirection, name, number, email, whatsapp, additional_info) => {
+    const addTransport = async (language, typeId, belongsTo, locationCountry, locationCity, desiredDirection, name, phoneNumber, email, whatsApp, additional_info) => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(`${BASE_URL}transport/add/${language}`, {
-                typeId, affiliationCountry, locationCountry, locationCity, desiredDirection, number, name, email, whatsapp, additional_info
+                typeId, belongsTo, locationCountry, locationCity, desiredDirection, phoneNumber, name, email, whatsApp, additional_info
             }, {
                 headers: {
                     'authorization': `Bearer ${token}`
@@ -292,12 +292,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message)
                 })
-            setTransports({
-                transports: response.data.transports,
-                totalCount: response.data.totalCount,
-                currentPage: response.data.page,
-                totalPages: response.data.totalPages
-            });
+            return response.data;
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Transports error");
@@ -316,7 +311,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setSingleTransport(response.data);
+            return response.data;
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Transport error");
@@ -341,10 +336,10 @@ export const GlobalProvider = ({ children }) => {
 
     }
 
-    const getMyTransports = async (page, lang) => {
+    const getMyTransports = async (page, lang, pageSize, type, location, country) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}transport/my/${lang}?page=${page}`, {
+            const response = await axios.get(`${BASE_URL}transport/my/${lang}?page=${page}&pageSize=${pageSize}&type=${type}&location=${location}&country=${country}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -352,12 +347,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message)
                 })
-            setTransports({
-                transports: response.data.transports,
-                totalCount: response.data.totalCount,
-                currentPage: response.data.page,
-                totalPages: response.data.totalPages
-            });
+            return response.data;
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Transports error");
@@ -382,10 +372,10 @@ export const GlobalProvider = ({ children }) => {
         }
     }
     
-    const getCargos = async (page, lang) => {
+    const getCargos = async (page, lang, pageSize, type, from, to, weight) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}cargo/${lang}?page=${page}`, {
+            const response = await axios.get(`${BASE_URL}cargo/${lang}?page=${page}&pageSize=${pageSize}&type=${type}&from=${from}&to=${to}&weight=${weight}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -411,7 +401,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setSingleCargo(response.data);
+            return response.data;
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Transport error");
@@ -429,12 +419,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setCargos({
-                cargos: response.data.cargos,
-                totalPages: response.data.totalPages,
-                totalCount: response.data.totalCount,
-                currentPage: response.data.currentPage,
-            });
+            return response.data
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Cargo error");
@@ -542,9 +527,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setMessages({
-                messages: response.data.messages
-            });
+            return response.data
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Server error");
@@ -562,12 +545,7 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
-            setNotifications({
-                notifications: response.data.notifications,
-                totalCount: response.data.totalCount,
-                currentPage: response.data.currentPage,
-                totalPages: response.data.totalPages
-            });
+            return response.data
         } catch (error) {
             console.error(error);
             setError(error.response?.data?.message || "Server error");

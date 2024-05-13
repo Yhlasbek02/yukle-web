@@ -112,7 +112,6 @@ export default function AddCargoModal({ onClose, language }) {
             );
 
             if (data) {
-                console.log("added");
                 onClose();
             } else {
                 onClose();
