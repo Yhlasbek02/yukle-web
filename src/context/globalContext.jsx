@@ -281,10 +281,10 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    const getTransports = async (page, lang) => {
+    const getTransports = async (page, lang, pageSize, type, location, country) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}transport/${lang}?page=${page}`, {
+            const response = await axios.get(`${BASE_URL}transport/${lang}?page=${page}&pageSize=${pageSize}&type=${type}&location=${location}&country=${country}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -336,10 +336,10 @@ export const GlobalProvider = ({ children }) => {
 
     }
 
-    const getMyTransports = async (page, lang, pageSize, type, location, country) => {
+    const getMyTransports = async (page, lang) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}transport/my/${lang}?page=${page}&pageSize=${pageSize}&type=${type}&location=${location}&country=${country}`, {
+            const response = await axios.get(`${BASE_URL}transport/my/${lang}?page=${page}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }

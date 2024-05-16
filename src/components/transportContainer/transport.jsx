@@ -141,7 +141,7 @@ export default function Transport({ language }) {
               <From>
                 <img src={globusIcon} alt="" />
                 <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
-                {getName(transport.location_city, 'name')}, {getName(transport.location_country, 'name')}
+                {transport.location_city ? getName(transport.location_city, 'name'): ''}, {getName(transport.location_country, 'name')}
               </From>
             </Location>
             <Properties>

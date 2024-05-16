@@ -10,16 +10,20 @@ const Profile = ({ language }) => {
   const [translation, setTranslations] = useState(enData);
   const [profile, setProfile] = useState({});
   const {getProfile} = useGlobalContext();
+  const [profileLanguage, setProfileLanguage] = useState('');
   const loadTranslations = () => {
     switch (language) {
       case 'en':
         setTranslations(enData);
+        setProfileLanguage("English")
         break;
       case 'ru':
         setTranslations(ruData);
+        setProfileLanguage("Русский")
         break;
       case 'tr':
         setTranslations(trData);
+        setProfileLanguage("Türkçe")
         break;
       default:
         setTranslations(enData);
@@ -76,7 +80,7 @@ const Profile = ({ language }) => {
         <Line>
           <SingleInfo>
             <span>{translation.language}</span>
-            <h3>Language</h3>
+            <h3>{profileLanguage}</h3>
           </SingleInfo>
           <SingleInfo>
             <span>{translation.notifications}</span>

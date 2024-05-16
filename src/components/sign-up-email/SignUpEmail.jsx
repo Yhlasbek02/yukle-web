@@ -15,6 +15,7 @@ const getLanguageFromPath = () => {
   if (['en', 'ru', 'tr'].includes(lastPart)) {
     return lastPart;
   } else {
+    localStorage.setItem("selectedLanguage", 'en')
     return 'en';
   }
 };

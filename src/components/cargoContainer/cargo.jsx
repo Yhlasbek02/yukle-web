@@ -136,12 +136,12 @@ export default function Cargo({ language }) {
                                 <From>
                                     <img src={globusIcon} alt="" />
                                     <FaArrowRight color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
-                                    {getName(cargo.from_city, 'name')}, {getName(cargo.from_country, 'name')}
+                                    {cargo.from_city ? getName(cargo.from_city, 'name') : ''}, {getName(cargo.from_country, 'name')}
                                 </From>
                                 <From>
                                     <img src={globusIcon} alt="" />
                                     <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
-                                    {getName(cargo.to_city, 'name')}, {getName(cargo.to_country, 'name')}
+                                    {cargo.to_city ? getName(cargo.to_city, 'name') : ''}, {getName(cargo.to_country, 'name')}
                                 </From>
                             </Location>
                             <Properties>

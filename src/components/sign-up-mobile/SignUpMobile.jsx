@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { AuthStyle } from '../../styles/authSidebar';
+import { AuthStyle, Right, Left } from '../../styles/authSidebar';
 import { Link } from 'react-router-dom';
 import AuthSidebar from '../authSidebar/authSidebar';
 import { Card, Container, Mobile, RegisterLink } from '../../styles/authCard';
@@ -52,10 +52,10 @@ function SignUpMobile() {
 
   return (
     <AuthStyle>
-      <div className='right'>
+      <Right>
         <AuthSidebar />
-      </div>
-      <div className='left'>
+      </Right>
+      <Left>
         <Card>
           <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
           <Container>
@@ -74,7 +74,7 @@ function SignUpMobile() {
           </Container>
 
         </Card>
-      </div>
+      </Left>
 
 
     </AuthStyle>

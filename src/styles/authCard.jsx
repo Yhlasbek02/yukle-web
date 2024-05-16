@@ -8,10 +8,17 @@ export const Card = styled.div`
     border-radius: 30px;
     height: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    @media (max-width: 430px) {
+      border-radius: 0;
+    }
+    @media (max-width: 768px) { /* Adjust the max-width for tablet screens */
+        box-shadow: none; /* Remove background image */
+    }
     form {
-        margin-top: 10%;
-        width: 500px;
-
+      margin-top: 10%;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
     }
 
     h1 {
@@ -46,6 +53,9 @@ export const Card = styled.div`
             color: #4D9FFF;
             font-weight: 300;
         }
+        @media (max-width: 768px) {
+            padding: 12px;
+        }
     }
 
     button {
@@ -62,6 +72,10 @@ export const Card = styled.div`
         cursor: pointer;
         transition: background-color 0.3s;
         font-weight: 700;
+        @media (max-width: 768px) {
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
     }
 
     button:hover {

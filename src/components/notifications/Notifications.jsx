@@ -73,7 +73,6 @@ export default function Notifications({language}) {
             <CargoNotifications language={language} />
           </>
         )}
-        <Pagination />
       </Window>
       
       {/* <h3>Notifications</h3> */}

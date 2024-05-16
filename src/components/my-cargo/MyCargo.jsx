@@ -108,10 +108,10 @@ export default function MyCargo({ language }) {
               <TypePart>{getName(cargo.type, 'name')}</TypePart>
               <Location>
                 <From>
-                  <img src={globusIcon} alt="" /><FaArrowRight color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} /> {getName(cargo.from_city, 'name')}, {getName(cargo.from_country, 'name')} <br />
+                  <img src={globusIcon} alt="" /><FaArrowRight color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} /> {cargo.from_city ? getName(cargo.from_city, 'name') : ''} {cargo.from_country ? getName(cargo.from_country, 'name') : ''} <br />
                 </From>
                 <From>
-                  <img src={globusIcon} alt="" /><FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} /> {getName(cargo.to_city, 'name')}, {getName(cargo.to_country, 'name')}
+                  <img src={globusIcon} alt="" /><FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} /> {cargo.to_city ? getName(cargo.to_city, 'name') : ''} {cargo.to_country ? getName(cargo.to_country, 'name') : ''}
                 </From>
               </Location>
               <Properties>

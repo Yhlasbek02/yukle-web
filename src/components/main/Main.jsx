@@ -76,6 +76,9 @@ export default function Main() {
   useEffect(() => {
     const storedActiveLink = localStorage.getItem('activeLink');
     setActiveLink(storedActiveLink || 'Main');
+    if (storedActiveLink === "Notification") {
+      setNotificationsActive(true);
+    }
   }, []);
 
   const fetchProfile = async (lang) => {

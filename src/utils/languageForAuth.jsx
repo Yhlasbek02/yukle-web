@@ -11,13 +11,32 @@ const SelectContainer = styled.div`
     border-radius: 20px;
     padding: 10px;
     width: 12%;
+    margin-bottom: 10%;
+    @media (max-width: 768px) {
+        margin-bottom: 5%;
+        padding: 7px;
+        width: 10%;
+    }
+    @media (max-width: 426px) {
+        width: 14%;
+    }
+    @media (max-width: 376px) {
+        width: 15%;
+    }
+    @media (max-width: 321px) {
+        width: 18%;
+        margin-left: 80%;
+    }
 `;
 
 const SelectedLanguage = styled.span`
-  font-size: 1.2rem;
-  margin-right: 5px;
-  padding-right: 15px;
-  color: #4D9FFF;
+    font-size: 1.2rem;
+    margin-right: 5px;
+    padding-right: 15px;
+    color: #4D9FFF;
+    @media (max-width: 321px) {
+        font-size: 1rem;
+    }
 `;
 
 const Options = styled.div`
@@ -31,6 +50,9 @@ const Options = styled.div`
     z-index: 1;
     color: ${props => props.isOpen ? 'black' : '#4D9FFF'};
     display: ${props => props.isOpen ? 'block' : 'none'};
+    @media (max-width: 321px) {
+        font-size: 1rem;
+    }
 `;
 
 const OptionItem = styled.div`
@@ -40,6 +62,9 @@ const OptionItem = styled.div`
     cursor: pointer;
     &:hover {
         background-color: #f0f0f0;
+    }
+    @media (max-width: 321px) {
+        font-size: 14px;
     }
 `;
 
@@ -62,7 +87,7 @@ const LanguageSelectForAuth = ({ selectedLanguage, setSelectedLanguage }) => {
         const currentPathname = location.pathname;
         const lastSlashIndex = currentPathname.lastIndexOf("/");
         const newPath = currentPathname.substring(0, lastSlashIndex + 1) + newLanguage;
-        history(newPath); // Update the URL
+        history(newPath);
         setIsOpen(false);
     };
     
