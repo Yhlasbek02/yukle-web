@@ -246,31 +246,36 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    const changeAccount = async (lang, name, surname, phoneNumber, email, transportNotification, cargoNotification) => {
+    const changeAccount = async (lang, name, surname, phoneNumber, email) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}change-account/${lang}`,
+            const response = await axios.post(`${BASE_URL}auth/change-account/${lang}`,
                 {
-                    name, surname, phoneNumber, email, transportNotification, cargoNotification
+                    name, surname, phoneNumber, email
                 },
                 {
                     headers: {
                         'authorization': `Bearer ${token}`
                     }
                 })
-            setProfile({
-                user: response.data.user
-            });
+            if (response.status) {
+                toast.success(response.data.message);
+                return true;
+            }
         } catch (error) {
-            console.error(error);
-            setError(error.response?.data?.message || "Users error");
+            if (error.response) {
+                console.log(error);
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Add cargo failed');
+            }
         }
     }
 
     const deleteUser = async (lang) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`${BASE_URL}delete-account/${lang}`, {
+            await axios.delete(`${BASE_URL}auth/delete-account/${lang}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -371,7 +376,7 @@ export const GlobalProvider = ({ children }) => {
             setError(error.response?.data?.message || "Transport error");
         }
     }
-    
+
     const getCargos = async (page, lang, pageSize, type, from, to, weight) => {
         try {
             const token = localStorage.getItem('token');
@@ -502,7 +507,7 @@ export const GlobalProvider = ({ children }) => {
     const addMessage = async (text, lang) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.post(`${BASE_URL}user/chat/message/add/${lang}`, { text: text }, {
+            const response = await axios.post(`${BASE_URL}/chat/message/add/${lang}`, { text }, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -510,9 +515,17 @@ export const GlobalProvider = ({ children }) => {
                 .catch((err) => {
                     setError(err.response.data.message);
                 })
+            if (response.status) {
+                toast.success(response.data.message);
+                return true;
+            }
         } catch (error) {
-            console.error(error);
-            setError(error.response?.data?.message || "Server error");
+            if (error.response) {
+                console.log(error);
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Add transport failed');
+            }
         }
     }
 
@@ -534,10 +547,28 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    const getNotifications = async (lang) => {
+    const getNotifications = async (lang, page, type) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}user/notification/messages/${lang}?page=${page}`, {
+            const response = await axios.get(`${BASE_URL}notification/web/${lang}?page=${page}&type=${type}`, {
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
+            })
+                .catch((err) => {
+                    setError(err.response.data.message);
+                })
+            return response.data
+        } catch (error) {
+            console.error(error);
+            setError(error.response?.data?.message || "Server error");
+        }
+    }
+
+    const changeNotification = async (lang, type) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${BASE_URL}auth/change-notification/${type}/${lang}`, {}, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -608,7 +639,8 @@ export const GlobalProvider = ({ children }) => {
             addMessage,
             getMessages,
             getNotifications,
-            addTransport
+            addTransport,
+            changeNotification
         }}>
             {children}
         </GlobalContext.Provider>

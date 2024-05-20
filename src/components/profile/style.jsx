@@ -12,7 +12,7 @@ export const Title = styled.h3`
     text-align: center;
     font-weight: 800;
     margin-bottom: 1.2rem;
-    padding-left: 40%;
+    padding-left: 30%;
 `;
 
 export const Buttons = styled.div`
@@ -29,10 +29,11 @@ export const FirstLine = styled.div`
 
 export const LogOut = styled.button`
     border-radius: 30px;
-    align-items: flex-start;
+    display: flex;
+    align-items: center;
     justify-content: center;
     padding: 10px 35px;
-    width: 50%;
+    width: 25%;
     font-size: 1rem;
     cursor: pointer;
     height: 2.5rem;
@@ -51,6 +52,7 @@ export const Delete = styled(LogOut)`
     border-color: #FF584D;
     color: #FF584D;
     padding: 10px 20px;
+    text-align: center;
     &:hover {
         background-color: #ffe0e0;
         border-color: #d62728;
@@ -66,23 +68,67 @@ export const Line = styled.div`
 `
 
 export const SingleInfo = styled.div`
-    border: 1px solid #0075FF;
-    border-radius: 20px;
-    background-color: rgba(77, 159, 255, 0.05);
-    padding: 10px;
-    width: 30%;
-    margin: 1rem;
-    span {
-        font-size: 0.8rem;
-    }
-    h3 {
-        font-size: 1.2rem;
-        color: #0075ff;
-    }
+  border: 1px solid #0075FF;
+  border-radius: 20px;
+  background-color: rgba(77, 159, 255, 0.05);
+  padding: 10px;
+  width: 30%;
+  margin: 1rem;
+
+  span {
+    font-size: 0.8rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    color: #0075ff;
+  }
+
+  /* New styles for flex layout */
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: #4D9FFF;
+  }
+
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 2px solid #4D9FFF;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    position: relative;
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: #4D9FFF;
+    border-color: #4D9FFF;
+  }
+
+  input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    width: 4.5px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    top: 2.5px;
+    left: 5px;
+    transform: rotate(45deg);
+  }
 `
 
 export const ThirdInfo = styled.div`
     justify-content: center;
+    align-items: center;
     margin-top: 1rem;
 `
 export const SupportTitle = styled.h2`
@@ -98,10 +144,17 @@ export const TextArea = styled.textarea`
     background-color: rgba(77, 159, 255, 0.05);
     border-radius: 20px;
     padding: 10px;
-    width: 50%;
-    height: 15rem;
+    width: 55%;
+    height: 10rem;
     font-size: 1rem;
     color: #0075ff;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20%;    
+    &::placeholder {
+        color: #4D9FFF;
+        opacity: 1;
+    }
 `
 
 export const Button = styled.button`
@@ -112,11 +165,13 @@ export const Button = styled.button`
     text-aling: center;
     padding: 15px 35px;
     font-size: 1.1rem;
+    width: 15%;
     font-weight: 700;
     cursor: pointer;
     background-color: #4D9FFF;
     border:none;
     color: #fff;
+    margin-left: 40%;
     &:hover {
         background-color: #fff;
         border: 2px solid #4D9FFF;
@@ -126,3 +181,81 @@ export const Button = styled.button`
     }
 
 `
+
+export const ModalBackdrop = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1000;
+`;
+
+export const ModalContent = styled.div`
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+`;
+
+export const ModalTitle = styled.h2`
+    margin-bottom: 1rem;
+`;
+
+export const ModalButtons = styled.div`
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+`;
+
+export const ModalButton = styled.button`
+    padding: 0.5rem 2rem;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:first-of-type {
+        border: 1.5px solid #4d9fff;
+        background-color: #4D9FFF;
+        color: white;
+        &:hover {
+            background-color: #fff;
+            border-color: #388eff;
+            color: #4D9FFF;
+        }
+    }
+
+    &:last-of-type {
+        border: 1.5px solid #FF584D;
+        background-color: #FF584D;
+        color: #fff;
+        &:hover {
+            background-color: #fff;
+            color: #FF584D;
+        }
+    }
+`;
+
+export const InputField = styled.input`
+    border: 1px solid #0075FF;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    font-size: 1.3rem;
+    color: #0075ff;
+
+    &::placeholder {
+        color: #4D9FFF;
+        opacity: 1;
+    }
+`;

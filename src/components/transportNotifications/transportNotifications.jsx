@@ -6,34 +6,65 @@ import AddTransport from '../addButtons/transport/addTransport'
 import enData from "../../utils/locales/en/transport.json";
 import ruData from "../../utils/locales/ru/transport.json";
 import trData from "../../utils/locales/tr/transport.json";
+import { useGlobalContext } from '../../context/globalContext'
+import LoadingSpinner from '../../utils/spinner/Loading'
+import Pagination from '../../utils/paginationTag/pagination'
 
 export default function TransportNotifications({ language }) {
+    const { getNotifications, getSingleTransport } = useGlobalContext();
+    const [loading, setLoading] = useState(true);
     const [activeModal, setActiveModal] = useState(null);
     const [translation, setTranslations] = useState(enData);
-    const openModal = (containerIndex) => {
-        setActiveModal(containerIndex);
-    };
-    const loadTranslations = () => {
-        switch (language) {
-            case 'en':
-                setTranslations(enData);
-                break;
-            case 'ru':
-                setTranslations(ruData);
-                break;
-            case 'tr':
-                setTranslations(trData);
-                break;
-            default:
-                setTranslations(enData);
+    const [transports, setTransports] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
+    const [singleTransport, setSingleTransport] = useState(null);
+    const openModal = async (id) => {
+        try {
+            setLoading(true);
+            const transportData = await getSingleTransport(id, language);
+            setSingleTransport(transportData);
+            setActiveModal(id);
+            setLoading(false);
+        } catch (error) {
+            console.error(error)
         }
+
     };
+
+    const loadTranslations = () => {
+        const translations = {
+            'en': enData,
+            'ru': ruData,
+            'tr': trData
+        };
+        setTranslations(translations[language] || enData);
+    };
+
+    const fetchTransportNotifications = async (pageNumber) => {
+        try {
+            setLoading(true);
+            const data = await getNotifications(language, pageNumber, "transport");
+            setTransports(data.notifications);
+            setPage(data.currentPage);
+            setTotalPage(data.totalPages);
+            setLoading(false);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(() => {
+        fetchTransportNotifications(page);
         loadTranslations();
     }, [language]);
+
     const closeModal = () => {
         setActiveModal(null);
+        setSingleTransport(null);
     };
+
+
     const modalRef = useRef();
 
     useEffect(() => {
@@ -49,29 +80,72 @@ export default function TransportNotifications({ language }) {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
     }, [closeModal]);
+
+    const getName = (transport, name) => {
+        switch (language) {
+            case 'ru':
+                return transport[`${name}Ru`];
+            case 'tr':
+                return transport[`${name}Tr`];
+            default:
+                return transport[`${name}En`];
+        }
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
+    };
+
+    const handlePrevPage = () => {
+        if (page > 1) {
+            fetchTransportNotifications(page - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (page < totalPage) {
+            fetchTransportNotifications(page + 1);
+
+        }
+    };
+
+
+
     return (
         <>
             <Window>
-                {Array(8).fill().map((_, containerIndex) => (
-                    <Container key={containerIndex} onClick={() => openModal(containerIndex)}>
-                        <TypePart>Transport type</TypePart>
-                        <Location>
-                            <From>
-                                <FaArrowLeft color='#000' style={{ marginRight: "0.5rem" }} />
-                                <img src={globusIcon} alt="" style={{ marginRight: "0.5rem" }} />
-                                city, country <br />
-                            </From>
-                            <From>
-                                <img src={globusIcon} alt="" />
-                                <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
-                                city, country
-                            </From>
-                        </Location>
-                        <Properties>
-                            <SingleProperty><span>{translation.date}: </span><p>date</p> </SingleProperty>
-                        </Properties>
-                    </Container>
-                ))}
+                {loading ? (
+                    <LoadingSpinner />
+                ) : transports.length > 0 ? (
+                    transports.map((transport) => (
+                        <Container key={transport.relatedEntity.uuid} onClick={() => openModal(transport.relatedEntity.uuid)}>
+                            <TypePart>
+                                {getName(transport.relatedEntity.type, 'name')}
+                            </TypePart>
+                            <Location>
+                                <From>
+                                    <FaArrowLeft color='#000' style={{ marginRight: "0.5rem" }} />
+                                    <img src={globusIcon} alt="" style={{ marginRight: "0.5rem" }} />
+                                    {getName(transport.relatedEntity.affiliation_country, 'name')} <br />
+                                </From>
+                                <From>
+                                    <img src={globusIcon} alt="" />
+                                    <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
+                                    {transport.location_city ? getName(transport.relatedEntity.location_city, 'name') : ''}, {getName(transport.relatedEntity.location_country, 'name')}
+                                </From>
+                            </Location>
+                            <Properties>
+                                <SingleProperty><span>{translation.date}: </span><p>{formatDate(transport.relatedEntity.createdAt)}</p> </SingleProperty>
+                            </Properties>
+                        </Container>
+                    ))
+                ) : (
+                    <div>No notification</div>
+                )}
+                {transports.length > 0 ? (
+                    <Pagination currentPage={page} totalPages={totalPage} onPrevPage={handlePrevPage} onNextPage={handleNextPage} />
+                ) : (<></>)}
             </Window>
             {activeModal !== null && (
                 <ModalOverlay>
@@ -86,19 +160,19 @@ export default function TransportNotifications({ language }) {
                                 <span>
                                     {translation.modalName}
                                 </span>
-                                <h3>Name of user</h3>
+                                <h3>{singleTransport.transport.name}</h3>
                             </ModalInfo>
                             <ModalInfo>
                                 <span>
                                     {translation.modalNumber}
                                 </span>
-                                <h3>Mobile number of user</h3>
+                                <h3>{singleTransport.transport.phoneNumber}</h3>
                             </ModalInfo>
                             <ModalInfo>
                                 <span>
                                     {translation.modalEmail}
                                 </span>
-                                <h3>Email of user</h3>
+                                <h3>{singleTransport.transport.email}</h3>
                             </ModalInfo>
                         </ModalContent>
                     </ModalContainer>

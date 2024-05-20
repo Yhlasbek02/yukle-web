@@ -10,27 +10,60 @@ import CargoNotifications from '../cargoNotifications/cargoNotifications'
 import enData from "../../utils/locales/en/button.json";
 import ruData from "../../utils/locales/ru/button.json";
 import trData from "../../utils/locales/tr/button.json";
-import { Title, Window } from './style'
+import { Container, TypePart, From, Location, Properties, SingleProperty, Window, ModalOverlay, ModalContainer, ModalContent, ModalTitle, ModalInfo, Title } from '../transportContainer/style'
+import { useGlobalContext } from '../../context/globalContext'
 const SwitchButtonComponent = ({ isRight, handleClick, language }) => {
+  const { getNotifications } = useGlobalContext();
+  const [loading, setLoading] = useState(true);
+  const [notifications, setNotifications] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [translation, setTranslations] = useState(enData);
   const loadTranslations = () => {
     switch (language) {
-        case 'en':
-            setTranslations(enData);
-            break;
-        case 'ru':
-            setTranslations(ruData);
-            break;
-        case 'tr':
-            setTranslations(trData);
-            break;
-        default:
-            setTranslations(enData);
+      case 'en':
+        setTranslations(enData);
+        break;
+      case 'ru':
+        setTranslations(ruData);
+        break;
+      case 'tr':
+        setTranslations(trData);
+        break;
+      default:
+        setTranslations(enData);
     }
-};
-useEffect(() => {
+  };
+
+  const fetchNotifications = async (pageNumber) => {
+    try {
+      setLoading(true);
+      const notificationsData = await getNotifications(language, pageNumber);
+      setNotifications(notifications.data);
+      setPage(notificationsData.currentPage);
+      setTotalPage(notificationsData.totalPages);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
     loadTranslations();
-}, [language]);
+    fetchNotifications(page);
+  }, [language]);
+
+
+  const getName = (transport, name) => {
+    switch (language) {
+      case 'ru':
+        return transport[`${name}Ru`];
+      case 'tr':
+        return transport[`${name}Tr`];
+      default:
+        return transport[`${name}En`];
+    }
+  };
   return (
     <SwitchButtonWrapper>
       <ToggleButton isActive={!isRight} onClick={handleClick}>
@@ -47,7 +80,7 @@ useEffect(() => {
   );
 };
 
-export default function Notifications({language}) {
+export default function Notifications({ language }) {
   const [isRight, setIsRight] = useState(false);
 
   const handleToggle = () => {
@@ -57,7 +90,7 @@ export default function Notifications({language}) {
     <>
 
       <Window>
-        
+
         <FormBox>
           <ButtonBox>
             <SwitchButtonComponent isRight={isRight} handleClick={handleToggle} language={language} />
@@ -74,7 +107,7 @@ export default function Notifications({language}) {
           </>
         )}
       </Window>
-      
+
       {/* <h3>Notifications</h3> */}
 
     </>

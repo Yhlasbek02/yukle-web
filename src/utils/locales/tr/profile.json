@@ -11,5 +11,12 @@
     "cargo":"Kargo",
     "support_title":"Destek merkezi",
     "placeholder":"Mesajınız",
-    "button": "Gönder"
+    "button": "Gönder",
+    "modalTitle":"Silme İşlemini Onayla",
+    "modalMessage":"Hesabınızı silmek istediğinizden emin misiniz?",
+    "confirm":"Evet, Sil",
+    "cancel":"İptal",
+    "edit_account":"Degiştirmek",
+    "save_button":"Kaydetmek",
+    "change_account":"Hesabi degiştir"
 }
