@@ -147,7 +147,7 @@ export default function AddCargoModal({ onClose, language }) {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         try {
             await addCargoFunction();
         } catch (error) {
@@ -180,7 +180,7 @@ export default function AddCargoModal({ onClose, language }) {
                 return country.nameEn;
         }
     };
-    
+
     const getCityName = (country) => {
         switch (language) {
             case 'en':
@@ -193,7 +193,21 @@ export default function AddCargoModal({ onClose, language }) {
                 return country.nameEn;
         }
     };
-    
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                onClose();
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [onClose]);
+
 
     return (
         <ModalOverlay>

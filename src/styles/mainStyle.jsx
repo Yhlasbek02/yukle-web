@@ -3,11 +3,6 @@ import navImg from "../assets/Rectangle.svg"
 export const AppStyled = styled.div`
     main{
       flex: 1;
-      border-radius: 32px;
-      // overflow-y: scroll;
-      // &::-webkit-scrollbar{
-      //   width: 0;
-      // }
     }
     body {
         padding: 0;
@@ -18,8 +13,12 @@ export const AppStyled = styled.div`
 export const MainLayout = styled.div`
     display: flex;
     gap: 1rem;
-    min-height: 100vh; /* Take up full height */
+    min-height: 100vh;
     overflow-y: auto;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0;
+    }
 `;
 
 export const NavStyled = styled.nav`
@@ -53,6 +52,11 @@ export const NavStyled = styled.nav`
     .bottom-nav {
         cursor: pointer;
     }
+    @media (max-width: 768px) {
+      padding: 1.5rem;
+      display: none;
+      border-radius: 0;
+    }
 `;
 
 
@@ -85,5 +89,21 @@ export const Username = styled.div`
     top: 20%; /* Move icon 5px down */
     cursor: pointer;
     transform: translateY(-5px);
+  }
+  @media (max-width: 768px) {
+    .left {
+      padding-left: 10px;
+      h4 {
+        font-size: 0.9rem;
+      }
+      h3 {
+        font-size: 1rem;
+      }
+    }
+
+    .right {
+      padding-right: 20px;
+      font-size: 1.5rem;
+    }
   }
 `;

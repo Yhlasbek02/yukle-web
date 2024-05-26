@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { AuthStyle } from '../../styles/authSidebar';
+import { AuthStyle, Right, Left } from '../../styles/authSidebar';
 import { Link } from 'react-router-dom';
 import AuthSidebar from '../authSidebar/authSidebar';
 import LanguageSelectForAuth from '../../utils/languageForAuth';
@@ -104,7 +104,7 @@ function Verification() {
         console.log('Verification successful');
         history(`/main/${language}`);
       }
-      
+
     } catch (error) {
       setError(error.response?.data?.message || 'Sign up failed');
     }
@@ -113,15 +113,15 @@ function Verification() {
   const seconds = remainingTime % 60;
   return (
     <AuthStyle>
-      <div className='right'>
+      <Right>
         <AuthSidebar />
-      </div>
-      <div className='left'>
+      </Right>
+      <Left>
         <Card>
           <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
           <Container>
             <form onSubmit={handleSubmit}>
-              <h1 style={{ fontWeight: 800 }}>
+              <h1>
                 {translation.title}
               </h1>
               <Timer>{`${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}</Timer>
@@ -156,7 +156,7 @@ function Verification() {
             </form>
           </Container>
         </Card>
-      </div>
+      </Left>
     </AuthStyle>
   );
 }

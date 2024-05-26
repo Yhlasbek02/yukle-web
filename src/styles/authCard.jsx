@@ -26,7 +26,15 @@ export const Card = styled.div`
         font-weight: 700;
         color: #4D9FFF;
         font-size: 20px;
-        margin-bottom: 20px; /* Add spacing below the heading */
+        margin-bottom: 20px;
+        @media (max-width: 768px) {
+          padding: 2.5rem;
+          margin-bottom: 15px;
+        }
+        @media (max-width: 426px) {
+          padding: 1.5rem;
+          margin-bottom: 10px;
+        }
     }
 
     input {
@@ -75,6 +83,10 @@ export const Card = styled.div`
         @media (max-width: 768px) {
           margin-top: 20px;
           margin-bottom: 20px;
+          font-size: 1.1rem;
+        }
+        @media (max-width: 425px) {
+          font-size: 1rem;
         }
     }
 
@@ -87,22 +99,44 @@ export const Card = styled.div`
 export const Container = styled.div`
     text-align: center;
     padding: 10px;
-    height: 500px;
+    height: 1oovh;
     display: flex;
-    justify-content: center; /* Horizontally center elements */
+    justify-content: center;
     align-items: center;
     .privacy {
         bottom: 0;
     }
     h1 {
-        font-weight: 800;
-        font-size: 2rem;
+      font-weight: 800;
+      font-size: 2rem;
     }
     span {
         font-weight: 300;
-        font-size: 13px;
+        font-size: 1rem;
         color: #4D9FFF;
         display: inline-flex;
+        @media (max-width: 425px) {
+          font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+      padding: 5px;
+      h1 {
+        font-weight: 600;
+        font-size: 1.5rem;
+      }
+    }
+    @media (max-width: 426px) {
+      h1 {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 350px) {
+      h1 {
+        font-size: 1rem;
+      }
     }
 `
 
@@ -117,6 +151,9 @@ export const RegisterLink = styled.p`
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
+    @media (max-width: 425px) {
+      font-size: 0.9rem;
+    }
   }
 `;
 
@@ -133,6 +170,9 @@ export const Timer = styled.div`
   font-size: 2rem;
   color: #4D9FFF;
   font-weight: bold;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const Paragraph = styled.p`
@@ -149,6 +189,12 @@ export const CodeContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 50px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  @media (max-width: 426px) {
+    width: 100%;
+  }
 `
 
 export const InputField = styled.input`
@@ -190,12 +236,19 @@ export const Input = styled.input`
 
 export const EyeIcon = styled.div`
   position: absolute;
-  top: 45%;
+  font-size: 1.3rem;
+  top: 40%;
   transform: translateY(-50%);
   right: 20%;
   padding: 5px;
   cursor: pointer;
   color: #4D9FFF;
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 1rem;
+  }
 `;
 
 export const TryAgainMessage = styled(Link)`

@@ -34,7 +34,7 @@ export default function EmailForm({ submit, email, setEmail, password, setPasswo
             <input type="password" placeholder={translation.password} value={password} onChange={(e) => setPassword(e.target.value)} />
             <br />
             <span className='sign-mobile'>{translation.paragraph}&nbsp;<RegisterLink><Link to={`/login-mobile/${language}`}>{translation.option}</Link></RegisterLink></span><br />
-            <div style={{ marginTop: "120px" }}>
+            <div style={{ marginTop: "100px" }}>
                 <button type="submit">
                     {translation.button}
                 </button>

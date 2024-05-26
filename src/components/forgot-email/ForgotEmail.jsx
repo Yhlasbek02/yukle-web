@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { AuthStyle } from '../../styles/authSidebar';
+import { AuthStyle, Left, Right } from '../../styles/authSidebar';
 import { Link } from 'react-router-dom';
 import AuthSidebar from '../authSidebar/authSidebar';
 import LanguageSelectForAuth from '../../utils/languageForAuth';
@@ -66,15 +66,15 @@ function ForgotEmail() {
 
   return (
     <AuthStyle>
-      <div className='right'>
+      <Right>
         <AuthSidebar />
-      </div>
-      <div className='left'>
+      </Right>
+      <Left>
         <Card>
-        <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
+          <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
           <Container>
             <form onSubmit={handleSubmit}>
-              <h1 style={{ fontSize: "2rem" }}>
+              <h1>
                 {translation.title}
               </h1>
               <input type="email" placeholder={translation.email} value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -82,18 +82,13 @@ function ForgotEmail() {
               <span className='sign-mobile'>{translation.paragraph}&nbsp;<RegisterLink><Link to={`/forgot-mobile/${selectedLanguage}`}>{translation.option_mobile}</Link></RegisterLink></span><br />
               <div style={{ marginTop: "100px" }}>
                 <button type="submit" style={{ marginTop: "5.5rem" }}>
-                  {translation.button}  
+                  {translation.button}
                 </button><br />
               </div>
-
-
             </form>
           </Container>
-
         </Card>
-      </div>
-
-
+      </Left>
     </AuthStyle>
   );
 }

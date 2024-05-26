@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { AuthStyle } from '../../styles/authSidebar';
+import { AuthStyle, Right, Left } from '../../styles/authSidebar';
 import { Link } from 'react-router-dom';
 import AuthSidebar from '../authSidebar/authSidebar';
 import LanguageSelectForAuth from '../../utils/languageForAuth';
@@ -26,7 +26,7 @@ function VerificationForgot() {
   const { verifyCode } = useGlobalContext();
   const [language, setLang] = useState('en');
   const [showTryAgain, setShowTryAgain] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(300); // 5 minutes in seconds
+  const [remainingTime, setRemainingTime] = useState(300);
   const [inputsDisabled, setInputsDisabled] = useState(false);
   const [otp, setOTP] = useState(['', '', '', '']);
   useEffect(() => {
@@ -104,7 +104,7 @@ function VerificationForgot() {
         console.log('Verification successful');
         history(`/new-password/${language}`);
       }
-      
+
     } catch (error) {
       setError(error.response?.data?.message || 'Sign up failed');
     }
@@ -113,10 +113,10 @@ function VerificationForgot() {
   const seconds = remainingTime % 60;
   return (
     <AuthStyle>
-      <div className='right'>
+      <Right>
         <AuthSidebar />
-      </div>
-      <div className='left'>
+      </Right>
+      <Left>
         <Card>
           <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
           <Container>
@@ -156,7 +156,7 @@ function VerificationForgot() {
             </form>
           </Container>
         </Card>
-      </div>
+      </Left>
     </AuthStyle>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
-import { AuthStyle } from '../../styles/authSidebar';
+import { AuthStyle, Left, Right } from '../../styles/authSidebar';
 import AuthSidebar from '../authSidebar/authSidebar';
 import { Card, Container, Input, EyeIcon, InputContainer } from '../../styles/authCard';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
@@ -72,10 +72,10 @@ function NewPassword() {
 
   return (
     <AuthStyle>
-      <div className='right'>
+      <Right>
         <AuthSidebar />
-      </div>
-      <div className='left'>
+      </Right>
+      <Left>
         <Card>
           <LanguageSelectForAuth selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
           <Container>
@@ -92,7 +92,7 @@ function NewPassword() {
                 <Eye showPassword={showPassword} togglePasswordVisibility={() => setShowPassword(!showPassword)} />
               </InputContainer>
 
-              <div style={{ marginTop: "130px" }}>
+              <div>
                 <button type="submit">
                   {translation.button}
                 </button>
@@ -100,7 +100,7 @@ function NewPassword() {
             </form>
           </Container>
         </Card>
-      </div>
+      </Left>
     </AuthStyle>
   );
 }

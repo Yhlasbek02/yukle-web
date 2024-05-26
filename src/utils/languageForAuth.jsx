@@ -19,6 +19,7 @@ const SelectContainer = styled.div`
     }
     @media (max-width: 426px) {
         width: 14%;
+        margin-bottom: 0;
     }
     @media (max-width: 376px) {
         width: 15%;
