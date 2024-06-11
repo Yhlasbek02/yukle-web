@@ -20,6 +20,13 @@ export const ModalContainer = styled.div`
     width: 35%;
     height: 100%;
     overflow-y: auto;
+    @media (max-width: 768px) {
+        width: 60%;
+    }
+    @media (min-width: 425px) {
+        margin-top: 0.5rem;
+        width: 90%;
+    }
 `;
 
 

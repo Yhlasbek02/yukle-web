@@ -49,8 +49,8 @@ const Options = styled.div`
     border: 1px solid #4D9FFF;
     border-top: none;
     z-index: 1;
-    color: ${props => props.isOpen ? 'black' : '#4D9FFF'};
-    display: ${props => props.isOpen ? 'block' : 'none'};
+    color: ${props => props.$isOpen ? 'black' : '#4D9FFF'};
+    display: ${props => props.$isOpen ? 'block' : 'none'};
     @media (max-width: 321px) {
         font-size: 1rem;
     }
@@ -104,7 +104,7 @@ const LanguageSelectForAuth = ({ selectedLanguage, setSelectedLanguage }) => {
     return (
         <SelectContainer>
             <SelectedLanguage>{capitalizeFirstLetter(selectedLanguage)}</SelectedLanguage>
-            <Options isOpen={isOpen}>
+            <Options $isOpen={isOpen}>
                 <OptionItem onClick={() => handleLanguageChange("en")}>En</OptionItem>
                 <OptionItem onClick={() => handleLanguageChange("ru")}>Ru</OptionItem>
                 <OptionItem onClick={() => handleLanguageChange("tr")}>Tr</OptionItem>

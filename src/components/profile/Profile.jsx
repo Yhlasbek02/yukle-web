@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Buttons, Delete, FirstLine, Line, LogOut, SecondLine, SingleInfo, SupportTitle, TextArea, ThirdInfo, Title, Window, ModalBackdrop, ModalButton, ModalButtons, ModalContent, ModalTitle, InputField } from './style';
+import {
+  Button, Buttons, Delete, FirstLine, Line, LogOut, SecondLine, SingleInfo,
+  SupportTitle, TextArea, ThirdInfo, Title, Window, ModalBackdrop,
+  ModalButton, ModalButtons, ModalContent, ModalTitle, InputField
+} from './style';
 import enData from "../../utils/locales/en/profile.json";
 import ruData from "../../utils/locales/ru/profile.json";
 import trData from "../../utils/locales/tr/profile.json";
 import { useGlobalContext } from '../../context/globalContext';
-import { useNavigate } from "react-router-dom"
-const Profile = ({ language }) => {
+import { useNavigate, useLocation } from "react-router-dom";
+import { Mobile, ProfileMobile } from '../../utils/switchButtons.jsx/style';
+const Profile = ({language}) => {
   const [translation, setTranslations] = useState(enData);
   const [profile, setProfile] = useState({});
   const [notifications, setNotifications] = useState({
@@ -13,7 +18,7 @@ const Profile = ({ language }) => {
     cargo: false,
   });
   const { getProfile, changeNotification, deleteUser, changeAccount, addMessage } = useGlobalContext();
-  const [profileLanguage, setProfileLanguage] = useState('');
+  const [profileLanguage, setProfileLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -21,23 +26,26 @@ const Profile = ({ language }) => {
   const [email, setEmail] = useState('');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [text, setText] = useState('');
-  const navigation = useNavigate();
-  const loadTranslations = () => {
+  const [desktopLanguage, setDesktopLanguage] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const loadTranslations = (language) => {
     switch (language) {
       case 'en':
         setTranslations(enData);
-        setProfileLanguage("English");
+        setDesktopLanguage("English")
         break;
       case 'ru':
         setTranslations(ruData);
-        setProfileLanguage("Русский");
+        setDesktopLanguage("Русский");
         break;
       case 'tr':
         setTranslations(trData);
-        setProfileLanguage("Türkçe");
+        setDesktopLanguage("Türkçe")
         break;
       default:
         setTranslations(enData);
+        setDesktopLanguage("English");
     }
   };
 
@@ -52,21 +60,21 @@ const Profile = ({ language }) => {
   };
   const closeEditModal = () => setIsEditModalOpen(false);
   const confirmDelete = async () => {
-    await handleDelete(language);
+    await handleDelete(profileLanguage);
     closeModal();
   };
 
   const handleEditAccount = async () => {
     try {
-      const isSuccess = await changeAccount(language, name, surname, phoneNumber, email);
+      const isSuccess = await changeAccount(profileLanguage, name, surname, phoneNumber, email);
       if (isSuccess) {
         setIsEditModalOpen(false);
-        fetchProfile(language);
+        fetchProfile(profileLanguage);
       }
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const fetchProfile = async (lang) => {
     try {
@@ -84,29 +92,27 @@ const Profile = ({ language }) => {
   const handleDelete = async (lang) => {
     try {
       await deleteUser(lang);
-      navigation(`/${language}`);
+      navigate(`/${lang}`);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigation(`/${language}`);
+    navigate(`/${profileLanguage}`);
   };
 
   const handleSendMessage = async () => {
     try {
-      const isSuccess = await addMessage(text, language)
+      const isSuccess = await addMessage(text, profileLanguage);
       if (isSuccess) {
         setText('');
       }
-      
     } catch (error) {
       console.error(error);
     }
-    
-  }
+  };
 
   useEffect(() => {
     loadTranslations();
@@ -114,20 +120,34 @@ const Profile = ({ language }) => {
   }, [language]);
 
   const handleCheckboxChange = async (e) => {
-    const { name, checked } = e.target
+    const { name, checked } = e.target;
     setNotifications({
       ...notifications,
       [name]: checked,
     });
     try {
-      await changeNotification(language, name)
+      await changeNotification(language, name);
     } catch (error) {
-      console.error("Failed to change:", error)
+      console.error("Failed to change:", error);
     }
+  };
+
+  const handleLanguageChange = (e) => {
+    const selectedLanguage = e.target.value;
+    setProfileLanguage(selectedLanguage);
+    localStorage.setItem('selectedLanguage', selectedLanguage);
+    const currentPathname = location.pathname;
+    const newPath = currentPathname.replace(/\/(en|ru|tr)$/, `/${selectedLanguage}`);
+    navigate(newPath);
+    loadTranslations(selectedLanguage);
+    fetchProfile(selectedLanguage);
   };
 
   return (
     <Window>
+      <ProfileMobile>
+        <Title>{translation.title}</Title>
+      </ProfileMobile>
       <FirstLine>
         <Title>{translation.title}</Title>
         <Buttons>
@@ -154,9 +174,17 @@ const Profile = ({ language }) => {
           </SingleInfo>
         </Line>
         <Line>
-          <SingleInfo>
+          <SingleInfo id='mobile'>
             <span>{translation.language}</span>
-            <h3>{profileLanguage}</h3>
+            <select value={profileLanguage} onChange={handleLanguageChange}>
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+              <option value="tr">Türkçe</option>
+            </select>
+          </SingleInfo>
+          <SingleInfo id='desktop'>
+            <span>{translation.language}</span>
+            <h3>{desktopLanguage}</h3>
           </SingleInfo>
           <SingleInfo>
             <span>{translation.notifications}</span>
@@ -186,7 +214,12 @@ const Profile = ({ language }) => {
       </SecondLine>
       <ThirdInfo>
         <SupportTitle>{translation.support_title}</SupportTitle>
-        <TextArea placeholder={translation.placeholder} value={text} onChange={(e) => setText(e.target.value)}></TextArea><br />
+        <TextArea
+          placeholder={translation.placeholder}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          required
+        />
         <Button onClick={handleSendMessage}>{translation.button}</Button>
       </ThirdInfo>
 
@@ -194,9 +227,7 @@ const Profile = ({ language }) => {
         <ModalBackdrop>
           <ModalContent>
             <ModalTitle>{translation.modalTitle}</ModalTitle>
-            <p>
-              {translation.modalMessage}
-            </p>
+            <p>{translation.modalMessage}</p>
             <ModalButtons>
               <ModalButton onClick={confirmDelete}>
                 {translation.confirm}
@@ -212,9 +243,7 @@ const Profile = ({ language }) => {
       {isEditModalOpen && (
         <ModalBackdrop>
           <ModalContent>
-            <ModalTitle>
-              {translation.change_account}
-            </ModalTitle>
+            <ModalTitle>{translation.change_account}</ModalTitle>
             <InputField
               type="text"
               placeholder={translation.name}
@@ -250,7 +279,6 @@ const Profile = ({ language }) => {
           </ModalContent>
         </ModalBackdrop>
       )}
-
     </Window>
   );
 };

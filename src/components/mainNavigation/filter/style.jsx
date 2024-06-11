@@ -11,7 +11,7 @@ export const FilterStyle = styled.div`
 `
 
 export const Text = styled.h3`
-    color: ${({ isActive }) => (isActive ? '#4D9FFF' : '#fff')};
+    color: ${({ $isActive }) => ($isActive ? '#4D9FFF' : '#fff')};
     font-size: 18px;
 `
 export const FormBox = styled.div`
@@ -37,8 +37,8 @@ export const ToggleButton = styled.button`
     font-size: 1rem;
     position: relative;
     text-align: center;
-    color: ${({ isActive }) => (isActive ? '#4D9FFF' : '#fff')};
-    z-index: ${({ isActive }) => (isActive ? '1' : 'auto')};
+    color: ${({ $isActive }) => ($isActive ? '#4D9FFF' : '#fff')};
+    z-index: ${({ $isActive }) => ($isActive ? '1' : 'auto')};
 `;
 
 export const SwitchButton = styled.div`

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Container, TypePart, From, Location, Properties, SingleProperty, Window, ModalOverlay, ModalContainer, ModalContent, ModalTitle, ModalInfo } from '../transportContainer/style'
-import { FaArrowLeft } from "react-icons/fa"
+import { FaArrowLeft, FaFilter } from "react-icons/fa"
 import globusIcon from "../../assets/globus_1.svg"
 import { Title } from '../transportContainer/style'
 import AddTransport from '../addButtons/transport/addTransport'
@@ -11,7 +11,8 @@ import trData from "../../utils/locales/tr/transport.json";
 import { useGlobalContext } from '../../context/globalContext'
 import emptyImage from "../../assets/empty.svg"
 import LoadingSpinner from '../../utils/spinner/Loading'
-
+import { Mobile } from '../../utils/switchButtons.jsx/style'
+import { FiFilter } from 'react-icons/fi'
 export default function MyTransport({ language }) {
   const { getMyTransports } = useGlobalContext();
   const [loading, setLoading] = useState(true);
@@ -89,7 +90,11 @@ export default function MyTransport({ language }) {
   return (
     <>
       <Window>
-        <Title>{translation.title}</Title>
+        <Mobile>
+          <Title>{translation.title}</Title>
+          <FiFilter style={{ fontSize: "1.5rem", color: "#fff", marginTop: "1rem", marginRight: "1rem"}} />
+        </Mobile>
+        
         {
           loading ? (
             <LoadingSpinner />

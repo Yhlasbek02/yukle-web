@@ -507,7 +507,7 @@ export const GlobalProvider = ({ children }) => {
     const addMessage = async (text, lang) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post(`${BASE_URL}/chat/message/add/${lang}`, { text }, {
+            const response = await axios.post(`${BASE_URL}chat/message/add/${lang}`, { text }, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }
@@ -524,7 +524,7 @@ export const GlobalProvider = ({ children }) => {
                 console.log(error);
                 toast.error(error.response.data.message);
             } else {
-                toast.error('Add transport failed');
+                toast.error('Server error');
             }
         }
     }

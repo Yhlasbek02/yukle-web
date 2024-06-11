@@ -13,6 +13,9 @@ export const Container = styled.div`
     width: 45%;
     margin: 1rem;
     cursor: pointer;
+    @media (max-width: 426px) {
+        width: 90%;
+    }
 `
 
 export const TypePart = styled.div`
@@ -105,6 +108,16 @@ export const ModalContainer = styled.div`
     width: 35%;
     height: 60%;
     overflow-y: auto;
+    @media (max-width: 769px) {
+        margin-top: 30%;
+        width: 50%;
+        height: 55%;
+    }
+    @media (max-width: 768px) {
+        margin-top: 40%;
+        width: 95%;
+        height: 65%;
+    }
 `;
 
 

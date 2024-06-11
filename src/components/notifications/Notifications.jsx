@@ -66,14 +66,14 @@ const SwitchButtonComponent = ({ isRight, handleClick, language }) => {
   };
   return (
     <SwitchButtonWrapper>
-      <ToggleButton isActive={!isRight} onClick={handleClick}>
+      <ToggleButton $isActive={!isRight} onClick={handleClick}>
         <div style={{ display: "flex", width: "50%", justifyContent: "center", alignItems: 'center' }}><img src={isRight ? cargoSvg : cargoActiveSvg} alt="" style={{ width: '1.2rem', height: '1.2rem' }} /><span style={{ marginLeft: "10px" }}>{translation.cargo}</span> </div>
       </ToggleButton>
       <SwitchButtonContainer>
         <SwitchButtonLabel></SwitchButtonLabel>
         <SwitchButton isRight={isRight} />
       </SwitchButtonContainer>
-      <ToggleButton isActive={isRight} onClick={handleClick}>
+      <ToggleButton $isActive={isRight} onClick={handleClick}>
         <div style={{ display: "flex", width: '50%', justifyContent: "center", alignItems: 'center' }}><img src={isRight ? transportActiveSvg : transport} alt="" style={{ width: '1.2rem', height: '1.2rem' }} /><span style={{ marginLeft: "10px" }}>{translation.transport}</span></div>
       </ToggleButton>
     </SwitchButtonWrapper>

@@ -13,6 +13,14 @@ export const Title = styled.h3`
     font-weight: 800;
     margin-bottom: 1.2rem;
     padding-left: 30%;
+    @media (max-width: 768px) {
+        color: #fff;
+        font-size: 2.5rem;
+        margin-left: 10%;
+    }
+    @media (max-width: 426px) {
+        margin-left: 0;
+    }
 `;
 
 export const Buttons = styled.div`
@@ -25,6 +33,9 @@ export const FirstLine = styled.div`
     display: flex;
     justify-content: space-between;
     padding-right: 1rem;
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 export const LogOut = styled.button`
@@ -65,71 +76,116 @@ export const SecondLine = styled.div`
 `
 export const Line = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    @media (min-width: 1024px) {
+        #mobile {
+            display: none;
+        }
+    }
+    @media (max-width: 769px) {
+        #desktop {
+            display: none;
+        }
+    }
 `
 
 export const SingleInfo = styled.div`
-  border: 1px solid #0075FF;
-  border-radius: 20px;
-  background-color: rgba(77, 159, 255, 0.05);
-  padding: 10px;
-  width: 30%;
-  margin: 1rem;
+    border: 1px solid #0075FF;
+    border-radius: 20px;
+    background-color: rgba(77, 159, 255, 0.05);
+    padding: 10px;
+    width: 27%;
+    margin: 1rem;
+    display: flex; /* Added */
+    flex-direction: column; /* Added */
+    gap: 0.5rem;
+    span {
+        font-size: 0.8rem;
+        padding-left: 3px;
+    }
+    h3 {
+        font-size: 1.2rem;
+        color: #0075ff;
+        padding-left: 3px;
+    }
+    label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        color: #4D9FFF;
+    }
+    
 
-  span {
-    font-size: 0.8rem;
-  }
+    input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        border: 2px solid #4D9FFF;
+        border-radius: 4px;
+        background-color: #fff;
+        cursor: pointer;
+        position: relative;
+    }
 
-  h3 {
-    font-size: 1.2rem;
-    color: #0075ff;
-  }
+    select {
+        width: 100%;
+        padding-bottom: 5px;
+        border: none;
+        background: transparent;
+        color: #0075ff;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+        
+    select:focus {
+        outline: none;
+    }
+    input[type="checkbox"]:checked {
+        background-color: #4D9FFF;
+        border-color: #4D9FFF;
+    }
 
-  /* New styles for flex layout */
-  label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    color: #4D9FFF;
-  }
+    input[type="checkbox"]:checked::after {
+        content: '';
+        position: absolute;
+        width: 4.5px;
+        height: 10px;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        top: 2.5px;
+        left: 5px;
+        transform: rotate(45deg);
+    }
 
-  input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin: 0;
-    border: 2px solid #4D9FFF;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: pointer;
-    position: relative;
-  }
-
-  input[type="checkbox"]:checked {
-    background-color: #4D9FFF;
-    border-color: #4D9FFF;
-  }
-
-  input[type="checkbox"]:checked::after {
-    content: '';
-    position: absolute;
-    width: 4.5px;
-    height: 10px;
-    border: solid #fff;
-    border-width: 0 2px 2px 0;
-    top: 2.5px;
-    left: 5px;
-    transform: rotate(45deg);
-  }
+    @media (max-width: 426px) {
+        width: 100%;
+        margin: 0.5rem;
+        gap: 0;
+        span {
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1rem;
+        }
+        select {
+            font-size: 1rem;
+        }
+    }
 `
 
 export const ThirdInfo = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
+    @media (max-width: 426px) {
+        display: none;
+    }
 `
 export const SupportTitle = styled.h2`
     font-size: 2.5rem;
@@ -139,7 +195,9 @@ export const SupportTitle = styled.h2`
     margin-bottom: 1.2rem;
 `
 
-export const TextArea = styled.textarea`
+export const TextArea = styled.textarea.attrs({
+    required: true
+})`
     border: 1px solid #0075FF;
     background-color: rgba(77, 159, 255, 0.05);
     border-radius: 20px;
@@ -154,6 +212,10 @@ export const TextArea = styled.textarea`
     &::placeholder {
         color: #4D9FFF;
         opacity: 1;
+    }
+    
+    @media (max-width: 769px) {
+        height: 7rem;
     }
 `
 

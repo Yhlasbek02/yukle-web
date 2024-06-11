@@ -7,6 +7,12 @@ export const PaginationContainer = styled.div`
     align-items: center;
     bottom: 0;
     padding-bottom: 0.5rem;
+    @media (max-width: 768px) {
+        margin-left: 40%;
+    }
+    @media (max-width: 426px) {
+        margin-left: 30%;
+    }
 `
 export const Button = styled.button`
     padding: 0.5rem 1rem;

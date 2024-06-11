@@ -11,7 +11,8 @@ import trData from "../../utils/locales/tr/cargo.json";
 import emptyImage from "../../assets/empty.svg"
 import { useGlobalContext } from '../../context/globalContext'
 import LoadingSpinner from '../../utils/spinner/Loading'
-
+import {  Mobile } from '../../utils/switchButtons.jsx/style'
+import { FiFilter } from 'react-icons/fi'
 export default function MyCargo({ language }) {
   const { getMyCargos } = useGlobalContext();
   const [loading, setLoading] = useState(true);
@@ -99,7 +100,10 @@ export default function MyCargo({ language }) {
   return (
     <>
       <Window>
-        <Title>{translation.title}</Title>
+        <Mobile>
+          <Title>{translation.title}</Title>
+          <FiFilter style={{ fontSize: "1.5rem", color: "#fff", marginTop: "1rem", marginRight: "1rem"}} />
+        </Mobile>
         {loading ? (
           <LoadingSpinner />
         ) : cargos.length > 0 ? (

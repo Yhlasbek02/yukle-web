@@ -23,8 +23,8 @@ const Options = styled.div`
     border: 1px solid #ccc;
     border-top: none;
     z-index: 1;
-    color: ${props => props.isOpen ? 'black' : '#fff'};
-    display: ${props => props.isOpen ? 'block' : 'none'};
+    color: ${props => props.$isOpen ? 'black' : '#fff'};
+    display: ${props => props.$isOpen ? 'block' : 'none'};
 `;
 
 const OptionItem = styled.div`
@@ -53,10 +53,10 @@ const LanguageSelect = ({ selectedLanguage, setSelectedLanguage }) => {
 
     const handleLanguageChange = (newLanguage) => {
         setSelectedLanguage(newLanguage);
+        localStorage.setItem('selectedLanguage', newLanguage);
         const currentPathname = location.pathname;
-        const lastSlashIndex = currentPathname.lastIndexOf("/");
-        const newPath = currentPathname.substring(0, lastSlashIndex + 1) + newLanguage; // Construct the new path
-        history(newPath); // Update the URL
+        const newPath = currentPathname.replace(/\/(en|ru|tr)$/, `/${newLanguage}`);
+        history(newPath);
         setIsOpen(false);
     };
     
@@ -72,7 +72,7 @@ const LanguageSelect = ({ selectedLanguage, setSelectedLanguage }) => {
     return (
         <SelectContainer>
             <SelectedLanguage>{capitalizeFirstLetter(selectedLanguage)}</SelectedLanguage>
-            <Options isOpen={isOpen}>
+            <Options $isOpen={isOpen}>
                 <OptionItem onClick={() => handleLanguageChange("en")}>En</OptionItem>
                 <OptionItem onClick={() => handleLanguageChange("ru")}>Ru</OptionItem>
                 <OptionItem onClick={() => handleLanguageChange("tr")}>Tr</OptionItem>

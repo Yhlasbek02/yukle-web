@@ -129,25 +129,25 @@ export default function Transport({ language }) {
         ) : transports.length > 0 ? (
           transports.map((transport) => (
             <Container key={transport.uuid} onClick={() => openModal(transport.uuid)}>
-            <TypePart>
-              {getName(transport.type, 'name')}
-            </TypePart>
-            <Location>
-              <From>
-                <FaArrowLeft color='#000' style={{ marginRight: "0.5rem" }} />
-                <img src={globusIcon} alt="" style={{ marginRight: "0.5rem" }} />
-                {getName(transport.affiliation_country, 'name')} <br />
-              </From>
-              <From>
-                <img src={globusIcon} alt="" />
-                <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
-                {transport.location_city ? getName(transport.location_city, 'name'): ''}, {getName(transport.location_country, 'name')}
-              </From>
-            </Location>
-            <Properties>
-              <SingleProperty><span>{translation.date}: </span><p>{formatDate(transport.createdAt)}</p> </SingleProperty>
-            </Properties>
-          </Container>
+              <TypePart>
+                {getName(transport.type, 'name')}
+              </TypePart>
+              <Location>
+                <From>
+                  <FaArrowLeft color='#000' style={{ marginRight: "0.5rem" }} />
+                  <img src={globusIcon} alt="" style={{ marginRight: "0.5rem" }} />
+                  {getName(transport.affiliation_country, 'name')} <br />
+                </From>
+                <From>
+                  <img src={globusIcon} alt="" />
+                  <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
+                  {transport.location_city ? getName(transport.location_city, 'name') : ''}, {getName(transport.location_country, 'name')}
+                </From>
+              </Location>
+              <Properties>
+                <SingleProperty><span>{translation.date}: </span><p>{formatDate(transport.createdAt)}</p> </SingleProperty>
+              </Properties>
+            </Container>
           ))
         ) : (
           <div>No transport</div>
@@ -172,13 +172,13 @@ export default function Transport({ language }) {
               <ModalInfo>
                 <span>{translation.modalNumber}</span>
                 <h3>
-                {singleTransport.transport.phoneNumber}
+                  {singleTransport.transport.phoneNumber}
                 </h3>
               </ModalInfo>
               <ModalInfo>
                 <span>{translation.modalEmail}</span>
                 <h3>
-                {singleTransport.transport.email}
+                  {singleTransport.transport.email}
                 </h3>
               </ModalInfo>
             </ModalContent>

@@ -13,6 +13,9 @@ export const Container = styled.div`
     width: 45%;
     margin: 1rem;
     cursor: pointer;
+    @media (max-width: 426px) {
+        width: 90%;
+    }
 `
 
 export const TypePart = styled.div`
@@ -67,6 +70,13 @@ export const Title = styled.h3`
     width: 100%;
     font-weight: 800;
     margin-bottom: 1.2rem;
+    @media (max-width: 768px){
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-top: 0.5rem;
+        margin-left: 1.5rem;
+    }
 `
 
 export const FirstLine = styled.div`
@@ -105,6 +115,16 @@ export const ModalContainer = styled.div`
     width: 30%;
     height: 60%;
     overflow-y: auto;
+    @media (max-width: 769px) {
+        margin-top: 30%;
+        width: 50%;
+        height: 55%;
+    }
+    @media (max-width: 768px) {
+        margin-top: 40%;
+        width: 95%;
+        height: 65%;
+    }
 `;
 
 
