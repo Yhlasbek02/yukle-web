@@ -9,7 +9,7 @@ export const ModalOverlay = styled.div`
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
-    text-align: center;
+    align-items: center;
     z-index: 9999;
 `;
 
@@ -18,28 +18,16 @@ export const ModalContainer = styled.div`
     border-radius: 8px;
     padding: 20px;
     width: 35%;
-    height: 100%;
-    overflow-y: auto;
     @media (max-width: 769px) {
         width: 60%;
     }
     @media (max-width: 426px) {
-        margin-top: 0.5rem;
         width: 90%;
-    }
-    @media (max-width: 375px) {
-        width: 90%;
-        margin-top: 0.5rem;
-    }
-    @media (max-height: 320px) {
-        width: 90%;
-        margin-top: 0.5rem;
     }
 `;
 
-
 export const ModalContent = styled.div`
-  margin-top: 20px;
+    margin-top: 20px;
 `;
 
 export const ModalHeader = styled.div`
@@ -58,68 +46,43 @@ export const ModalHeader = styled.div`
     }
 `
 export const ModalBody = styled.div`
+    display: flex;
+    flex-direction: column;
     label {
         font-size: 1rem;
-        display: block;
         margin-bottom: 5px;
-        text-align: left;
-        padding-left: 7px;
     }
+`;
 
-    input,
-    select {
-        width: 100%;
-        padding: 10px;
-        height: 2.7rem;
-        margin-bottom: 10px;
-        border: 1px solid #4D9FFF;
-        border-radius: 15px;
-        color: #4D9FFF;
-        font-size: 1.1rem;
-        padding-left: 0.5rem;
-    }
-`
-export const ModalCouple = styled.div`
-    display:flex;
-    width: 100%;
-`
-
-export const ChildCouple = styled.div`
-    width: 48.5%;
-`
-export const ModalOption = styled.option`
-    font-size: 1rem;
-    background-color: #fff;
-    color: #4D9FFF;
-    padding: 15px;
-`
 export const ModalFooter = styled.div`
-  button {
-    padding: 20px 60px;
-    cursor: pointer;
-    background-color: #4D9FFF;
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    outline: none;
-    font-size: 1rem;
-    &:hover {
-        background-color: #388eff; /* Change background color on hover */
-        transition: background-color 0.2s ease-in-out; /* Add a smooth transition */
+    display: flex;
+    justify-content: center;
+    button {
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #4D9FFF;
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        outline: none;
+        font-size: 1rem;
+        &:hover {
+            background-color: #388eff;
+            transition: background-color 0.2s ease-in-out;
+        }
     }
-  }
 `;
 
 export const ModalTextArea = styled.textarea`
-  width: 100%;
-  min-height: 3rem;
-  border-radius: 20px;
-  border: 1px solid #4D9FFF;
-  font-size: 1rem;
-  padding: 0.5rem;
-  color: #4D9FFF;
-  margin-bottom: 0.5rem;
-`
+    width: 100%;
+    min-height: 3rem;
+    border-radius: 10px;
+    border: 1px solid #4D9FFF;
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin-bottom: 10px;
+`;
+
 export const CloseButton = styled.button`
     right: 10%;
     background-color: red; /* Red background color */

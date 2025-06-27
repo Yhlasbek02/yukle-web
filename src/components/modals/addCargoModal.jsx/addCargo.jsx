@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { ModalContainer, ModalOverlay, ModalContent, ModalFooter, ModalHeader, ModalBody, ModalCouple, ChildCouple, ModalOption, ModalTextArea } from './style';
+import { ModalContainer, ModalOverlay, ModalContent, ModalFooter, ModalHeader, ModalBody, ModalCouple, ChildCouple, ModalOption, ModalTextArea, CloseButton } from './style';
 import enData from "../../../utils/locales/en/add_cargo.json";
 import ruData from "../../../utils/locales/ru/add_cargo.json";
 import trData from "../../../utils/locales/tr/add_cargo.json";
@@ -58,10 +58,8 @@ export default function AddCargoModal({ onClose, language }) {
             );
 
             if (data) {
-                console.log("added successfully");
                 onClose();
             } else {
-                console.log("not added");
                 onClose();
             }
         } catch (error) {
@@ -213,8 +211,15 @@ export default function AddCargoModal({ onClose, language }) {
         <ModalOverlay>
             <ModalContainer ref={modalRef}>
                 <ModalContent>
+                    
                     <form onSubmit={handleSubmit}>
-                        <ModalHeader>{translation.title}</ModalHeader>
+                        <ModalHeader>
+                            <span>
+                                {translation.title}
+                            </span>
+                            
+                            <CloseButton onClick={onClose}>&times;</CloseButton>
+                        </ModalHeader>
                         <ModalBody>
                             <label htmlFor="">{translation.type}</label>
                             <select name="" id="" onChange={(e) => setCargoTypeId(e.target.value)} value={cargoTypeId}>

@@ -13,6 +13,7 @@ import { useGlobalContext } from '../../context/globalContext'
 import LoadingSpinner from '../../utils/spinner/Loading'
 import {  Mobile } from '../../utils/switchButtons.jsx/style'
 import { FiFilter } from 'react-icons/fi'
+import SupportButton from '../supportButton/supportButton'
 export default function MyCargo({ language }) {
   const { getMyCargos } = useGlobalContext();
   const [loading, setLoading] = useState(true);
@@ -159,6 +160,7 @@ export default function MyCargo({ language }) {
           </ModalContainer>
         </ModalOverlay>
       )}
+      <SupportButton language={language} />
       <AddCargo language={language} />
     </>
 

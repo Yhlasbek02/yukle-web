@@ -105,7 +105,7 @@ export default function Main() {
   const renderContent = () => {
     switch (activeLink) {
       case 'Main':
-        return <Buttons language={selectedLanguage} isRight={isRight} setIsRight={setIsRight} />;
+        return <Buttons language={selectedLanguage} isRight={isRight} setIsRight={setIsRight} handleLinkClick={handleLinkClick} />;
       case 'Cargo':
         return <MyCargo language={selectedLanguage} />;
       case 'Transport':

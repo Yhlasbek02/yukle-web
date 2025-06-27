@@ -3,6 +3,7 @@
     "logout": "Log out",
     "delete": "Delete",
     "name": "name",
+    "surname": "surname",
     "mobile_number":"Mobile number",
     "email":"Email",
     "language":"Language",

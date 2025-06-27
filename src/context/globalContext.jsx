@@ -532,7 +532,7 @@ export const GlobalProvider = ({ children }) => {
     const getMessages = async (page, lang) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${BASE_URL}user/chat/messages/${lang}?page=${page}`, {
+            const response = await axios.get(`${BASE_URL}chat/messages/${lang}?page=${page}`, {
                 headers: {
                     'authorization': `Bearer ${token}`
                 }

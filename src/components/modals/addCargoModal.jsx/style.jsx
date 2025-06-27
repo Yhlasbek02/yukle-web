@@ -19,13 +19,22 @@ export const ModalContainer = styled.div`
     padding: 20px;
     width: 35%;
     height: 100%;
+    margin-top: 0.5rem;
     overflow-y: auto;
-    @media (max-width: 768px) {
+    @media (max-width: 769px) {
         width: 60%;
     }
-    @media (min-width: 425px) {
+    @media (max-width: 426px) {
         margin-top: 0.5rem;
         width: 90%;
+    }
+    @media (max-width: 376px) {
+        width: 90%;
+        margin-top: 0.5rem;
+    }
+    @media (max-height: 320px) {
+        width: 90%;
+        margin-top: 0.5rem;
     }
 `;
 
@@ -35,12 +44,19 @@ export const ModalContent = styled.div`
 `;
 
 export const ModalHeader = styled.div`
-    justify-content: space-between;
+    display: flex;
+    justify-content: center; /* Center the text horizontally */
+    align-items: center; /* Center the text vertically */
+    position: relative; /* Ensure the close button is positioned relative to this container */
     margin-bottom: 15px;
     text-align: center;
     font-size: 2rem;
     color: #4D9FFF;
     font-weight: 700;
+
+    & > span {
+        flex-grow: 1; /* Allow the text to take up remaining space */
+    }
 `
 
 export const ModalBody = styled.div`
@@ -106,3 +122,19 @@ export const ModalTextArea = styled.textarea`
   color: #4D9FFF;
   margin-bottom: 0.5rem;
 `
+export const CloseButton = styled.button`
+    right: 10%;
+    background-color: red; /* Red background color */
+    color: white; /* White text color */
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%; /* Make the button round */
+    width: 30px; /* Set width */
+    height: 30px; /* Set height */
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        background-color: darkred; /* Darker red on hover */
+    }
+`;

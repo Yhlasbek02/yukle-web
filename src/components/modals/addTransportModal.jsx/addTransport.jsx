@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { ModalContainer, ModalOverlay, ModalContent, ModalFooter, ModalHeader, ModalBody, ModalCouple, ChildCouple, ModalOption, ModalTextArea } from './style';
+import { ModalContainer, ModalOverlay, ModalContent, ModalFooter, ModalHeader, ModalBody, ModalCouple, ChildCouple, ModalOption, ModalTextArea, CloseButton } from './style';
 import enData from "../../../utils/locales/en/add_transport.json";
 import ruData from "../../../utils/locales/ru/add_transport.json";
 import trData from "../../../utils/locales/tr/add_transport.json";
@@ -163,7 +163,13 @@ export default function AddCargoModal({ onClose, language }) {
             <ModalContainer ref={modalRef}>
                 <ModalContent>
                     <form onSubmit={handleSubmit}>
-                        <ModalHeader>{translation.title}</ModalHeader>
+                        <ModalHeader>
+                            <span>
+                                {translation.title}
+                            </span>
+
+                            <CloseButton onClick={onClose}>&times;</CloseButton>
+                        </ModalHeader>
                         <ModalBody>
                             <label htmlFor="">{translation.type}</label>
                             <select name="" id="" onChange={(e) => setTransportTypeId(e.target.value)} value={transportTypeId}>
@@ -176,7 +182,7 @@ export default function AddCargoModal({ onClose, language }) {
                             <select name="" id="" onChange={handleAffiliationCountryChange} value={affiliationCountryId}>
                                 {countries.map((country) => (
                                     <ModalOption key={country.id} value={country.id}>{getNames(country)}</ModalOption>
-                                ))}                                
+                                ))}
                             </select>
                             <ModalCouple>
                                 <ChildCouple>
@@ -208,7 +214,7 @@ export default function AddCargoModal({ onClose, language }) {
                                         {getNames(country)}
                                     </ModalOption>
                                 ))}
-                                
+
                             </select>
 
                             <ModalCouple>
@@ -233,7 +239,7 @@ export default function AddCargoModal({ onClose, language }) {
                             </ModalCouple>
 
                             <label htmlFor="">{translation.additional}</label>
-                            <ModalTextArea onChange={(e) => setAdditionalInfo(e.target.value)}/>
+                            <ModalTextArea onChange={(e) => setAdditionalInfo(e.target.value)} />
                         </ModalBody>
                         <ModalFooter>
                             <button type="submit">

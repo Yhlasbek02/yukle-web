@@ -9,6 +9,7 @@ import trData from "../../utils/locales/tr/transport.json";
 import { useGlobalContext } from '../../context/globalContext'
 import LoadingSpinner from '../../utils/spinner/Loading'
 import Pagination from '../../utils/paginationTag/pagination'
+import SupportButton from '../supportButton/supportButton'
 
 export default function TransportNotifications({ language }) {
     const { getNotifications, getSingleTransport } = useGlobalContext();
@@ -127,12 +128,12 @@ export default function TransportNotifications({ language }) {
                                 <From>
                                     <FaArrowLeft color='#000' style={{ marginRight: "0.5rem" }} />
                                     <img src={globusIcon} alt="" style={{ marginRight: "0.5rem" }} />
-                                    {getName(transport.relatedEntity.affiliation_country, 'name')} <br />
+                                    {transport.relatedEntity.affiliation_country ? getName(transport.relatedEntity.affiliation_country, 'name') : ''} <br />
                                 </From>
                                 <From>
                                     <img src={globusIcon} alt="" />
                                     <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
-                                    {transport.location_city ? getName(transport.relatedEntity.location_city, 'name') : ''}, {getName(transport.relatedEntity.location_country, 'name')}
+                                    {transport.relatedEntity.location_city ? getName(transport.relatedEntity.location_city, 'name') : ''}, {transport.relatedEntity.location_country ? getName(transport.relatedEntity.location_country, 'name'): ''}
                                 </From>
                             </Location>
                             <Properties>
@@ -178,6 +179,7 @@ export default function TransportNotifications({ language }) {
                     </ModalContainer>
                 </ModalOverlay>
             )}
+            <SupportButton language={language} />
             <AddTransport language={language} />
         </>
 

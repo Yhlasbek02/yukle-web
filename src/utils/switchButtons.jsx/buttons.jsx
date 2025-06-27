@@ -11,6 +11,7 @@ import ruData from "../../utils/locales/ru/button.json";
 import trData from "../../utils/locales/tr/button.json";
 import { FiBell, FiFilter } from 'react-icons/fi'
 import { useGlobalContext } from '../../context/globalContext'
+import FilterModal from '../../components/mainNavigation/filter/FilterModal'
 const SwitchButtonComponent = ({ isRight, handleClick, language }) => {
     const [translation, setTranslations] = useState(enData);
     const loadTranslations = () => {
@@ -49,11 +50,12 @@ const SwitchButtonComponent = ({ isRight, handleClick, language }) => {
 };
 
 
-export default function Buttons({ language, isRight, setIsRight }) {
+export default function Buttons({ language, isRight, setIsRight, handleLinkClick }) {
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const { getProfile } = useGlobalContext();
     const [greeting, setGreeting] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const fetchProfile = async (lang) => {
         try {
             const data = await getProfile(lang);
@@ -89,8 +91,8 @@ export default function Buttons({ language, isRight, setIsRight }) {
                         <h4>{greeting},</h4>
                         <h3>{name} {surname}</h3>
                     </Text>
-                    <FiBell style={{ fontSize: "1.5rem", color: "#fff", marginTop: "10px" }} />
-                    <FiFilter style={{ fontSize: "1.5rem", color: "#fff", marginTop: "10px", marginLeft: "7px" }} />
+                    <FiBell style={{ fontSize: "1.5rem", color: "#fff", marginTop: "10px" }} onClick={() => handleLinkClick("Notification")} />
+                    <FiFilter style={{ fontSize: "1.5rem", color: "#fff", marginTop: "10px", marginLeft: "7px" }} onClick={() => setIsModalOpen(true)} />
                 </MobileProfile>
                 <FormBox>
                     <ButtonBox>
@@ -113,6 +115,14 @@ export default function Buttons({ language, isRight, setIsRight }) {
             ) : (
                 <Cargo language={language} />
             )}
+
+            <FilterModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                language={language}
+                isRight={isRight}
+                setIsRight={setIsRight}
+            />
         </>
     )
 }

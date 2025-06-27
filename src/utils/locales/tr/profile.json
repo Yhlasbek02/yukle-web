@@ -3,6 +3,7 @@
     "logout": "Çıkış",
     "delete": "Hesabı sil",
     "name": "Ad",
+    "surname":"soyadı",
     "mobile_number":"Cep telefonu numarası",
     "email":"E-posta",
     "language":"Dil",

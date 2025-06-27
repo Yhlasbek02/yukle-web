@@ -52,7 +52,7 @@ export const NavStyled = styled.nav`
 
 export const MenuIcon = styled.div`
   display: none;
-  position: fixed;
+  position: absolute;
   top: 10px;
   left: 10px;
   z-index: 1000;

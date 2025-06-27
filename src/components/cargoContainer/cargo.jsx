@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Container, TypePart, From, Location, Properties, SingleProperty, Window, ModalOverlay, ModalContainer, ModalContent, ModalTitle, ModalInfo } from './style';
 import globusIcon from "../../assets/globus_1.svg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
@@ -10,73 +10,71 @@ import { useGlobalContext } from '../../context/globalContext';
 import Pagination from '../../utils/paginationTag/pagination';
 import LoadingSpinner from '../../utils/spinner/Loading';
 import { useLocation } from 'react-router-dom';
+import SupportButton from '../supportButton/supportButton';
 
-export default function Cargo({ language }) {
+function Cargo({ language }) {
     const { getCargos, getSingleCargo } = useGlobalContext();
     const [loading, setLoading] = useState(true);
     const [activeModal, setActiveModal] = useState(null);
-    const [translation, setTranslations] = useState(enData);
+    const [translation, setTranslation] = useState(enData);
     const [cargos, setCargos] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [singleCargo, setSingleCargo] = useState(null);
 
     const search = useLocation().search;
-    const type = new URLSearchParams(search).get("type") || '';
-    const from = new URLSearchParams(search).get("from") || '';
-    const to = new URLSearchParams(search).get("to") || '';
-    const weight = new URLSearchParams(search).get("weight") || '';
-    const openModal = async (id) => {
-        try {
-            setLoading(true);
-            const cargoData = await getSingleCargo(id, language);
-            setSingleCargo(cargoData);
-            setActiveModal(id);
-            setLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
-    const loadTranslations = () => {
+    const loadTranslations = useCallback(() => {
         const translations = {
             'en': enData,
             'ru': ruData,
-            'tr': trData
+            'tr': trData,
         };
-        setTranslations(translations[language] || enData);
-    };
+        setTranslation(translations[language] || enData);
+    }, [language]);
 
-    const fetchCargos = async (pageNumber) => {
+    const fetchCargos = useCallback(async () => {
+        setLoading(true);
         try {
-            setLoading(true);
-            
-            console.log(type, from, to,weight);
-            let cargoData;
-            if (weight > 0) {
-                cargoData = await getCargos(pageNumber, language, 10, type, from, to, weight);
-            } else {
-                cargoData = await getCargos(pageNumber, language, 10, type, from, to, '');
-            }
-            
+            const searchParams = new URLSearchParams(search);
+            const type = searchParams.get("type") || '';
+            const from = searchParams.get("from") || '';
+            const to = searchParams.get("to") || '';
+            const weight = searchParams.get("weight") || '';
+
+            const cargoData = await getCargos(page, language, 10, type, from, to, weight);
             setCargos(cargoData.cargos);
             setPage(cargoData.currentPage);
             setTotalPage(cargoData.totalPages);
-            setLoading(false);
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
-    };
+    }, [getCargos, language, search]);
 
     useEffect(() => {
         fetchCargos(page);
         loadTranslations();
-    }, [language]);
+    }, [language, search, page, fetchCargos, loadTranslations]);
 
-    const closeModal = () => {
+    const openModal = useCallback(async (id) => {
+        setLoading(true);
+        try {
+            const cargoData = await getSingleCargo(id, language);
+            setSingleCargo(cargoData);
+            setActiveModal(id);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }, [getSingleCargo, language]);
+
+    const closeModal = useCallback(() => {
         setActiveModal(null);
         setSingleCargo(null);
-    };
+    }, []);
 
     const modalRef = useRef();
 
@@ -86,15 +84,13 @@ export default function Cargo({ language }) {
                 closeModal();
             }
         };
-
         document.addEventListener('mousedown', handleOutsideClick);
-
         return () => {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
-    }, []);
+    }, [closeModal]);
 
-    const getName = (cargo, name) => {
+    const getName = useCallback((cargo, name) => {
         switch (language) {
             case 'ru':
                 return cargo[`${name}Ru`];
@@ -103,25 +99,24 @@ export default function Cargo({ language }) {
             default:
                 return cargo[`${name}En`];
         }
-    };
+    }, [language]);
 
-    const formatDate = (dateString) => {
+    const formatDate = useCallback((dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString();
-    };
+    }, []);
 
-    const handlePrevPage = () => {
+    const handlePrevPage = useCallback(() => {
         if (page > 1) {
             fetchCargos(page - 1);
         }
-    };
+    }, [page, fetchCargos]);
 
-    const handleNextPage = () => {
+    const handleNextPage = useCallback(() => {
         if (page < totalPage) {
             fetchCargos(page + 1);
-
         }
-    };
+    }, [page, totalPage, fetchCargos]);
 
     return (
         <>
@@ -155,7 +150,7 @@ export default function Cargo({ language }) {
                 )}
                 {cargos.length > 0 ? (
                     <Pagination currentPage={page} totalPages={totalPage} onPrevPage={handlePrevPage} onNextPage={handleNextPage} />
-                ) : (<></>)}
+                ) : null}
             </Window>
             {activeModal !== null && (
                 <ModalOverlay>
@@ -166,25 +161,28 @@ export default function Cargo({ language }) {
                             </ModalTitle>
                             <ModalInfo>
                                 <span>{translation.modalName}</span>
-                                <h3>{singleCargo.cargo.name}</h3>
+                                <h3>{singleCargo?.cargo.name}</h3>
                             </ModalInfo>
                             <ModalInfo>
                                 <span>{translation.modalNumber}</span>
                                 <h3>
-                                    {singleCargo.cargo.phoneNumber}
+                                    {singleCargo?.cargo.phoneNumber}
                                 </h3>
                             </ModalInfo>
                             <ModalInfo>
                                 <span>{translation.modalEmail}</span>
                                 <h3>
-                                    {singleCargo.cargo.email}
+                                    {singleCargo?.cargo.email}
                                 </h3>
                             </ModalInfo>
                         </ModalContent>
                     </ModalContainer>
                 </ModalOverlay>
             )}
+            <SupportButton language={language} />
             <AddCargo language={language} />
         </>
     );
 }
+
+export default React.memo(Cargo);

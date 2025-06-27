@@ -19,7 +19,7 @@ export default function Navigation() {
                         </div>
                         <div className='right'>
                             <LanguageSelect />
-                            <FiBell style={{ marginTop: "7px", fontSize: "1.5rem" }} />
+                            <FiBell style={{ marginTop: "7px", fontSize: "1.5rem", cursor: "pointer" }} />
                         </div>
                     </Username>
                 </li>

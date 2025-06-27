@@ -12,11 +12,11 @@ export const Title = styled.h3`
     text-align: center;
     font-weight: 800;
     margin-bottom: 1.2rem;
-    padding-left: 30%;
+    padding-left: 43%;
     @media (max-width: 768px) {
         color: #fff;
         font-size: 2.5rem;
-        margin-left: 10%;
+        padding-left: 35%;
     }
     @media (max-width: 426px) {
         margin-left: 0;
@@ -39,12 +39,12 @@ export const FirstLine = styled.div`
 `;
 
 export const LogOut = styled.button`
-    border-radius: 30px;
+    border-radius: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 35px;
-    width: 25%;
+    padding: 10px;
+    width: 5rem;
     font-size: 1rem;
     cursor: pointer;
     height: 2.5rem;
@@ -57,12 +57,34 @@ export const LogOut = styled.button`
         border-color: #388eff;
         transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
     }
+    @media (max-width: 426px) {
+        border-radius: 50%;
+        justify-content: center;
+        background-color: #0075FF;
+        border: 1px solid #0075FF;
+        border: none;
+        width: 65px;
+        height: 65px;
+        margin-right: 1.5rem;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #005dbb;
+        }
+        
+        &:focus {
+            outline: none;
+        }
+    }
 `;
 
 export const Delete = styled(LogOut)`
     border-color: #FF584D;
     color: #FF584D;
-    padding: 10px 20px;
+    padding: 10px;
     text-align: center;
     &:hover {
         background-color: #ffe0e0;
@@ -95,17 +117,17 @@ export const SingleInfo = styled.div`
     border-radius: 20px;
     background-color: rgba(77, 159, 255, 0.05);
     padding: 10px;
-    width: 27%;
+    width: 45%;
     margin: 1rem;
-    display: flex; /* Added */
-    flex-direction: column; /* Added */
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
     span {
         font-size: 0.8rem;
         padding-left: 3px;
     }
     h3 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         color: #0075ff;
         padding-left: 3px;
     }
@@ -158,7 +180,7 @@ export const SingleInfo = styled.div`
         height: 10px;
         border: solid #fff;
         border-width: 0 2px 2px 0;
-        top: 2.5px;
+        top: 2px;
         left: 5px;
         transform: rotate(45deg);
     }
@@ -178,6 +200,11 @@ export const SingleInfo = styled.div`
         }
     }
 `
+
+export const SecondInfo = styled(SingleInfo)`
+    width: 90%;
+`;
+
 
 export const ThirdInfo = styled.div`
     justify-content: center;
@@ -241,7 +268,33 @@ export const Button = styled.button`
         font-weight: 700;
         transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
     }
+`
 
+
+export const MobileButton = styled.button`
+    border-radius: 30px;
+    width: 33%;
+    height: 4rem;
+    // margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-aling: center;
+    padding: 10px 15px;
+    margin-left: 5px;
+    font-size: 1rem;
+    // width: 15%;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: #4D9FFF;
+    border:none;
+    color: #fff;
+    &:hover {
+        background-color: #fff;
+        border: 2px solid #4D9FFF;
+        color:#4D9FFF;
+        font-weight: 700;
+        transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    }
 `
 
 export const ModalBackdrop = styled.div`
@@ -320,4 +373,13 @@ export const InputField = styled.input`
         color: #4D9FFF;
         opacity: 1;
     }
+`;
+
+export const MobileButtons = styled.div`
+    margin-top: 2rem;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
 `;

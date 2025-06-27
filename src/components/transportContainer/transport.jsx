@@ -10,6 +10,7 @@ import { useGlobalContext } from '../../context/globalContext';
 import Pagination from '../../utils/paginationTag/pagination';
 import LoadingSpinner from '../../utils/spinner/Loading';
 import { useLocation } from 'react-router-dom';
+import SupportButton from '../supportButton/supportButton';
 
 export default function Transport({ language }) {
   const { getTransports, getSingleTransport } = useGlobalContext();
@@ -20,10 +21,9 @@ export default function Transport({ language }) {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [singleTransport, setSingleTransport] = useState(null);
+
   const search = useLocation().search;
-  const type = new URLSearchParams(search).get("typeId") || '';
-  const location = new URLSearchParams(search).get("location") || '';
-  const country = new URLSearchParams(search).get("country") || '';
+
   const openModal = async (id) => {
     try {
       setLoading(true);
@@ -37,39 +37,36 @@ export default function Transport({ language }) {
   };
 
   const loadTranslations = () => {
-    switch (language) {
-      case 'en':
-        setTranslations(enData);
-        break;
-      case 'ru':
-        setTranslations(ruData);
-        break;
-      case 'tr':
-        setTranslations(trData);
-        break;
-      default:
-        setTranslations(enData);
-    }
-  };
+    const translations = {
+        'en': enData,
+        'ru': ruData,
+        'tr': trData
+    };
+    setTranslations(translations[language] || enData);
+};
 
   const fetchTransports = async (pageNumber) => {
     try {
       setLoading(true);
+      const type = new URLSearchParams(search).get("typeId") || '';
+      const location = new URLSearchParams(search).get("location") || '';
+      const country = new URLSearchParams(search).get("country") || '';
       const transportData = await getTransports(pageNumber, language, 10, type, location, country);
-      setTransports(transportData.transports);
-      setPage(transportData.currentPage);
-      setTotalPage(transportData.totalPages);
+      
+      setTransports(transportData.transports || []);
+      setPage(transportData.currentPage || 1);
+      setTotalPage(transportData.totalPages || 1);
       setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchTransports(page);
     loadTranslations();
-  }, [language]);
-
+  }, [language, page, search]);
 
   const closeModal = () => {
     setActiveModal(null);
@@ -117,7 +114,6 @@ export default function Transport({ language }) {
   const handleNextPage = () => {
     if (page < totalPage) {
       fetchTransports(page + 1);
-
     }
   };
 
@@ -185,6 +181,7 @@ export default function Transport({ language }) {
           </ModalContainer>
         </ModalOverlay>
       )}
+      <SupportButton language={language} />
       <AddTransport language={language} />
     </>
   );

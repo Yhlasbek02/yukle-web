@@ -13,6 +13,7 @@ import emptyImage from "../../assets/empty.svg"
 import LoadingSpinner from '../../utils/spinner/Loading'
 import { Mobile } from '../../utils/switchButtons.jsx/style'
 import { FiFilter } from 'react-icons/fi'
+import SupportButton from '../supportButton/supportButton'
 export default function MyTransport({ language }) {
   const { getMyTransports } = useGlobalContext();
   const [loading, setLoading] = useState(true);
@@ -127,6 +128,7 @@ export default function MyTransport({ language }) {
           <Pagination currentPage={page} totalPages={totalPage} onPrevPage={handlePrevPage} onNextPage={handleNextPage} />
         ) : (<></>)}
       </Window>
+      <SupportButton language={language} />
       <AddTransport language={language} />
     </>
   )

@@ -17,7 +17,6 @@ import homeMobile from "../../assets/home_mobile.svg";
 import cargoMobile from "../../assets/cargo_mobile.svg";
 import transportMobile from "../../assets/transport_mobile.svg";
 import profileMobile from "../../assets/profile_mobile.svg";
-import supportMobile from "../../assets/support_mobile.svg";
 
 const Navigation = ({ translation, profile, selectedLanguage, setSelectedLanguage, notificationsActive, handleLinkClick, activeLink, isRight, setIsRight, isMenuOpen }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -50,9 +49,6 @@ const Navigation = ({ translation, profile, selectedLanguage, setSelectedLanguag
                     </Item>
                     <Item onClick={() => handleLinkClick('Profile')}>
                         <img src={profileMobile} alt="" style={{ width: "40px", height: "45px" }} />
-                    </Item>
-                    <Item onClick={() => handleLinkClick('Support')}>
-                        <img src={supportMobile} alt="" style={{ width: "40px", height: "45px" }} />
                     </Item>
                 </MenuItem>
             ) : (
@@ -111,7 +107,7 @@ const Navigation = ({ translation, profile, selectedLanguage, setSelectedLanguag
                         </MenuStyle>
                     </Li>
                     <Li>
-                        <Filter language={selectedLanguage} isRight={isRight} setIsRight={setIsRight} />
+                        <Filter language={selectedLanguage} isRight={isRight} setIsRight={setIsRight} setIsModalOpen={true} />
                     </Li>
                 </MenuItem>
             )}

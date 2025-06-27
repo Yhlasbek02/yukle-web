@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const AddButtonContainer = styled.div`
     position: fixed;
     bottom: 0;
-    right: 7rem;
+    right: 2rem;
     transform: translateY(-50%);
     z-index: 999;
 `
@@ -24,5 +24,9 @@ export const Button = styled.button`
 
     &:hover {
         background-color: #005dbb;
+    }
+    
+    &:focus {
+        outline: none;
     }
 `

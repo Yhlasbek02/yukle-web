@@ -10,6 +10,7 @@ import trData from "../../utils/locales/tr/cargo.json";
 import { useGlobalContext } from '../../context/globalContext'
 import LoadingSpinner from '../../utils/spinner/Loading'
 import Pagination from '../../utils/paginationTag/pagination'
+import SupportButton from '../supportButton/supportButton'
 
 
 export default function CargoNotifications({ language }) {
@@ -123,12 +124,12 @@ export default function CargoNotifications({ language }) {
                                 <From>
                                     <img src={globusIcon} alt="" />
                                     <FaArrowRight color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
-                                    {cargo.relatedEntity.from_city ? getName(cargo.relatedEntity.from_city, 'name') : ''}, {getName(cargo.relatedEntity.from_country, 'name')}
+                                    {cargo.relatedEntity.from_city ? getName(cargo.relatedEntity.from_city, 'name') : ''} {cargo.relatedEntity.from_country ? getName(cargo.relatedEntity.from_country, 'name') : ''}
                                 </From>
                                 <From>
                                     <img src={globusIcon} alt="" />
                                     <FaArrowLeft color='#000' style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }} />
-                                    {cargo.relatedEntity.to_city ? getName(cargo.relatedEntity.to_city, 'name') : ''}, {getName(cargo.relatedEntity.to_country, 'name')}
+                                    {cargo.relatedEntity.to_city ? getName(cargo.relatedEntity.to_city, 'name') : ''}, {cargo.relatedEntity.to_country ? getName(cargo.relatedEntity.to_country, 'name') : ''}
                                 </From>
                             </Location>
                             <Properties>
@@ -171,6 +172,7 @@ export default function CargoNotifications({ language }) {
                     </ModalContainer>
                 </ModalOverlay>
             )}
+            <SupportButton language={language} />
             <AddCargo language={language} />
         </>
 
